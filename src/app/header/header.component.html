@@ -1,0 +1,9 @@
+<header>
+    <nav>
+        <ul>
+            <li><a routerLink="/">Home</a></li>
+            <li><a routerLink="/explore">Explore</a></li>
+            <li *ngIf="loggedIn"><a routerLink="/admin">Admin</a></li>
+        </ul>
+    </nav>
+</header>
