@@ -1,5 +1,5 @@
 {
-  "name": "schedule-handler",
+  "name": "schedule-manager",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
