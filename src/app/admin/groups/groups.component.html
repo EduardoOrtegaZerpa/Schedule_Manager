@@ -20,16 +20,25 @@
                 </select>
             </div>
         </div>
-        <div class="inputs">
+        <form [formGroup]="groupForm">
+          <div class="inputs">
             <div class="input">
-                <label for="groupName">NAME</label>
-                <input id="groupName" type="text" [(ngModel)]="groupName" placeholder="Name of the group">
+              <label for="groupName">NAME</label>
+              <input id="groupName" type="text" formControlName="groupName" placeholder="Name of the group">
+              <div *ngIf="groupForm.controls['groupName'].invalid && (groupForm.controls['groupName'].dirty || groupForm.controls['groupName'].touched)" class="error">
+                Name is required
+              </div>
             </div>
+        
             <div class="input">
-                <label for="groupDetails">DETAILS</label>
-                <input id="groupDetails" type="text" [(ngModel)]="groupDetails" placeholder="Details of the group">
+              <label for="groupDetails">DETAILS</label>
+              <input id="groupDetails" type="text" formControlName="groupDetails" placeholder="Details of the group">
+              <div *ngIf="groupForm.controls['groupDetails'].invalid && (groupForm.controls['groupDetails'].dirty || groupForm.controls['groupDetails'].touched)" class="error">
+                Details are required
+              </div>
             </div>
-        </div>
+          </div>
+        </form>
         <div class="schedule">
             <label for="schedule">SCHEDULE</label>
             <div class="organization-data-schedule">
@@ -103,6 +112,6 @@
     </div>
     <div class="buttons">
         <button>Create Group</button>
-        <button>Save Changes</button>
+        <button [ngClass]="{'disabled': groupForm.invalid}" [disabled]="groupForm.invalid">Save Changes</button>
     </div>
 </div>

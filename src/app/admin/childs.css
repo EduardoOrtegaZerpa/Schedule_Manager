@@ -93,3 +93,15 @@ input {
     background-color: white;
     color: #3D2C2E;
 }
+
+.error {
+    color: rgb(255, 91, 91);
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.disabled {
+    background-color: #3D2C2E !important;
+    color: #8C8C8C !important;
+    cursor: not-allowed !important;
+}

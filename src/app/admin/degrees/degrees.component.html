@@ -8,19 +8,28 @@
                 </select>
             </div>
         </div>
-        <div class="inputs">
-            <div class="input">
+        <form [formGroup]="degreeForm">
+            <div class="inputs">
+              <div class="input">
                 <label for="degreeName">NAME</label>
-                <input id="degreeName" type="text" [(ngModel)]="degreeName" placeholder="Name of the degree">
-            </div>
-            <div class="input">
+                <input id="degreeName" type="text" formControlName="degreeName" placeholder="Name of the degree">
+                <div *ngIf="degreeForm.controls['degreeName'].invalid && (degreeForm.controls['degreeName'].dirty || degreeForm.controls['degreeName'].touched)" class="error">
+                  Name is required
+                </div>
+              </div>
+          
+              <div class="input">
                 <label for="degreeYears">YEARS</label>
-                <input id="degreeYears" type="number" [(ngModel)]="degreeYears" placeholder="Years of the degree" min="0">
-            </div>      
-        </div>
+                <input id="degreeYears" type="number" formControlName="degreeYears" placeholder="Years of the degree" min="0">
+                <div *ngIf="degreeForm.controls['degreeYears'].invalid && (degreeForm.controls['degreeYears'].dirty || degreeForm.controls['degreeYears'].touched)" class="error">
+                  Years is required
+                </div>
+              </div>      
+            </div>
+        </form>
     </div>
     <div class="buttons">
         <button>Create Degree</button>
-        <button>Save Changes</button>
+        <button [ngClass]="{'disabled': degreeForm.invalid}" [disabled]="degreeForm.invalid">Save Changes</button>
     </div>
 </div>

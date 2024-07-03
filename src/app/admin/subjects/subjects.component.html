@@ -14,27 +14,42 @@
                 </select>
             </div>
         </div>
-        <div class="inputs">
+        <form class="inputs" [formGroup]="subjectForm" #formRef="ngForm">
             <div class="input">
-                <label for="subjectName">NAME</label>
-                <input id="subjectName" type="text" [(ngModel)]="subjectName" placeholder="Name of the subject">
+              <label for="subjectName">NAME</label>
+              <input id="subjectName" type="text" formControlName="subjectName" placeholder="Name of the subject">
+              <div *ngIf="subjectForm.controls['subjectName'].invalid && (subjectForm.controls['subjectName'].dirty || subjectForm.controls['subjectName'].touched)" class="error">
+                Name is required
+              </div>
             </div>
+            
             <div class="input">
-                <label for="subjectYear">YEAR</label>
-                <input id="subjectYear" type="number" [(ngModel)]="subjectYear" placeholder="Year of the subject" min="0">
+              <label for="subjectYear">YEAR</label>
+              <input id="subjectYear" type="number" formControlName="subjectYear" placeholder="Year of the subject" min="0">
+              <div *ngIf="subjectForm.controls['subjectYear'].invalid && (subjectForm.controls['subjectYear'].dirty || subjectForm.controls['subjectYear'].touched)" class="error">
+                Year is required
+              </div>
             </div>
+            
             <div class="input">
-                <label for="subjectAcronym">ACRONYM</label>
-                <input id="subjectAcronym" type="text" [(ngModel)]="subjectAcronym" placeholder="Acronym of the subject">
-            </div>  
+              <label for="subjectAcronym">ACRONYM</label>
+              <input id="subjectAcronym" type="text" formControlName="subjectAcronym" placeholder="Acronym of the subject">
+              <div *ngIf="subjectForm.controls['subjectAcronym'].invalid && (subjectForm.controls['subjectAcronym'].dirty || subjectForm.controls['subjectAcronym'].touched)" class="error">
+                Acronym is required
+              </div>
+            </div>
+            
             <div class="input">
-                <label for="subjectSemester">SEMESTER</label>
-                <input id="subjectSemester" type="number" [(ngModel)]="subjectSemester" placeholder="Semester of the subject" min="1" max="2">
-            </div> 
-        </div>
+              <label for="subjectSemester">SEMESTER</label>
+              <input id="subjectSemester" type="number" formControlName="subjectSemester" placeholder="Semester of the subject" min="1" max="2">
+              <div *ngIf="subjectForm.controls['subjectSemester'].invalid && (subjectForm.controls['subjectSemester'].dirty || subjectForm.controls['subjectSemester'].touched)" class="error">
+                Semester is required
+              </div>
+            </div>
+        </form>
     </div>
     <div class="buttons">
         <button>Create Subject</button>
-        <button>Save Changes</button>
+        <button [disabled]="subjectForm.invalid" [ngClass]="{'disabled': subjectForm.invalid}">Save Changes</button>
     </div>
 </div>

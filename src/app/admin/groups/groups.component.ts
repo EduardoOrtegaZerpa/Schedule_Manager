@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, forkJoin, from, map, of } from 'rxjs';
 import { Degree, Group, Schedule, Subject } from '../../../interfaces';
 
@@ -23,7 +23,7 @@ interface ScheduleRow {
 @Component({
   selector: 'app-groups',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './groups.component.html',
   styleUrls: ['./groups.component.css', '../childs.css']
 })
@@ -41,6 +41,8 @@ export class GroupsComponent {
 
   rows: ScheduleRow[] = [];
 
+  groupForm: FormGroup;
+
   scheduleResult: ScheduleResult[] = this.rows.map(row => ({
     hours: {startTime: null, endTime: null},
     days: [...this.days],
@@ -49,7 +51,12 @@ export class GroupsComponent {
     halls: Array(7).fill('')
   }));
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private fb: FormBuilder) {
+    this.groupForm = this.fb.group({
+      groupName: ['', Validators.required],
+      groupDetails: ['', Validators.required]
+    });
+  }
 
 
   resetScheduleInputs() {
