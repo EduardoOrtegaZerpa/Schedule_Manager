@@ -4,7 +4,6 @@ header {
     align-items: center;
     padding: 10px 20px;
     height: 5vh;
-    border-bottom: 1px solid #000;
   }
   
   nav ul {
@@ -17,13 +16,13 @@ header {
   
   nav ul li a {
     text-decoration: none;
-    color: gray ;
+    color: #886F68 ;
     font-weight: bold;
     cursor: pointer;
-    font-size: large;
+    font-size: x-large;
   }
   
   nav ul li a:hover {
-    color: #000;
+    color: #3D2C2E;
   }
   

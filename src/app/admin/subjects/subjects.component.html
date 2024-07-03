@@ -1,0 +1,40 @@
+<div class="admin-container">
+    <div class="main">
+        <div class="selects">
+            <div class="select">
+                <label for="degreeSelect">Select a degree</label>
+                <select id="degreeSelect" [(ngModel)]="degreeSelect">
+                    <option *ngFor="let degree of degrees" [ngValue]="degree">{{degree.name}}</option>
+                </select>
+            </div>
+            <div class="select">
+                <label for="subjectSelect">Select a subject</label>
+                <select id="subjectSelect" [(ngModel)]="subjectSelect">
+                    <option *ngFor="let subject of subjects" [ngValue]="subject">{{subject.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="inputs">
+            <div class="input">
+                <label for="subjectName">NAME</label>
+                <input id="subjectName" type="text" [(ngModel)]="subjectName" placeholder="Name of the subject">
+            </div>
+            <div class="input">
+                <label for="subjectYear">YEAR</label>
+                <input id="subjectYear" type="number" [(ngModel)]="subjectYear" placeholder="Year of the subject" min="0">
+            </div>
+            <div class="input">
+                <label for="subjectAcronym">ACRONYM</label>
+                <input id="subjectAcronym" type="text" [(ngModel)]="subjectAcronym" placeholder="Acronym of the subject">
+            </div>  
+            <div class="input">
+                <label for="subjectSemester">SEMESTER</label>
+                <input id="subjectSemester" type="number" [(ngModel)]="subjectSemester" placeholder="Semester of the subject" min="1" max="2">
+            </div> 
+        </div>
+    </div>
+    <div class="buttons">
+        <button>Create Subject</button>
+        <button>Save Changes</button>
+    </div>
+</div>

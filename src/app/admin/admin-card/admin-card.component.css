@@ -1,0 +1,20 @@
+.admin-card{
+    display: flex;
+    flex-direction: column;
+    background-color: #886F68;
+    padding: 20px;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.card-title{
+    font-size: x-large;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+.active {
+  background-color: #3D2C2E;
+  border-color: white;
+}

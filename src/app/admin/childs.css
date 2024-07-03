@@ -1,0 +1,95 @@
+:host{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+input:focus, select:focus {
+    outline: none;
+}
+
+label {
+    font-size: x-large;
+    font-weight: bold;
+    color: white;
+}
+
+input {
+    font-size: small;
+    padding: 15px;
+    flex: 1;
+}
+
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.selects {
+    display: flex;
+    justify-content: flex-end;
+    gap: 40px;
+}
+
+.select {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.select label {
+    font-size: x-large;
+    font-weight: bold;
+    color: white;
+}
+
+.select select {
+    font-size: small;
+    padding: 15px;
+    min-width: 200px;
+    width: fit-content;
+}
+
+.inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.input {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex: 1;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+    align-self: flex-end;
+}
+
+.buttons button {
+    padding: 10px 20px;
+    font-size: large;
+    font-weight: bold;
+    color: white;
+    background-color: #3D2C2E;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.buttons button:hover {
+    background-color: white;
+    color: #3D2C2E;
+}

@@ -1,0 +1,26 @@
+<div class="admin-container">
+    <div class="main">
+        <div class="selects">
+            <div class="select">
+                <label for="degreeSelect">Select a degree</label>
+                <select id="degreeSelect" [(ngModel)]="degreeSelect">
+                    <option *ngFor="let degree of degrees" [ngValue]="degree">{{degree.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="inputs">
+            <div class="input">
+                <label for="degreeName">NAME</label>
+                <input id="degreeName" type="text" [(ngModel)]="degreeName" placeholder="Name of the degree">
+            </div>
+            <div class="input">
+                <label for="degreeYears">YEARS</label>
+                <input id="degreeYears" type="number" [(ngModel)]="degreeYears" placeholder="Years of the degree" min="0">
+            </div>      
+        </div>
+    </div>
+    <div class="buttons">
+        <button>Create Degree</button>
+        <button>Save Changes</button>
+    </div>
+</div>

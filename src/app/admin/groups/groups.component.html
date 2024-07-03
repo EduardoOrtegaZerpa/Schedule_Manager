@@ -1,0 +1,108 @@
+<div class="admin-container">
+    <div class="main">
+        <div class="selects">
+            <div class="select">
+                <label for="degreeSelect">Select a degree</label>
+                <select id="degreeSelect" [(ngModel)]="degreeSelect">
+                    <option *ngFor="let degree of degrees" [ngValue]="degree">{{degree.name}}</option>
+                </select>
+            </div>
+            <div class="select">
+                <label for="subjectSelect">Select a subject</label>
+                <select id="subjectSelect" [(ngModel)]="subjectSelect">
+                    <option *ngFor="let subject of subjects" [ngValue]="subject">{{subject.name}}</option>
+                </select>
+            </div>
+            <div class="select">
+                <label for="groupSelect">Select a group</label>
+                <select id="groupSelect" [(ngModel)]="groupSelect">
+                    <option *ngFor="let group of groups" [ngValue]="group">{{group.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="inputs">
+            <div class="input">
+                <label for="groupName">NAME</label>
+                <input id="groupName" type="text" [(ngModel)]="groupName" placeholder="Name of the group">
+            </div>
+            <div class="input">
+                <label for="groupDetails">DETAILS</label>
+                <input id="groupDetails" type="text" [(ngModel)]="groupDetails" placeholder="Details of the group">
+            </div>
+        </div>
+        <div class="schedule">
+            <label for="schedule">SCHEDULE</label>
+            <div class="organization-data-schedule">
+                <div class="table-container">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Hours</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                        <th>Sunday</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let row of rows; let i = index">
+                        <th>
+                          <div class="time-interval-input">
+                            <input type="time" name="start_time_{{i}}" [(ngModel)]="row.startTime"
+                              (change)="onTimeChange($event, i, true)">
+                            <p>-</p>
+                            <input type="time" name="end_time_{{i}}" [(ngModel)]="row.endTime"
+                              (change)="onTimeChange($event, i, false)">
+                          </div>
+                        </th>
+                        <td class="checkbox-cell" (click)="updateTable($event, i, 0)" id="monday"
+                          [class.checked]="scheduleResult[i].days[0]"></td>
+                        <td class="checkbox-cell" (click)="updateTable($event, i, 1)" id="tuesday"
+                          [class.checked]="scheduleResult[i].days[1]"></td>
+                        <td class="checkbox-cell" (click)="updateTable($event, i, 2)" id="wednesday"
+                          [class.checked]="scheduleResult[i].days[2]"></td>
+                        <td class="checkbox-cell" (click)="updateTable($event, i, 3)" id="thursday"
+                          [class.checked]="scheduleResult[i].days[3]"></td>
+                        <td class="checkbox-cell" (click)="updateTable($event, i, 4)" id="friday"
+                          [class.checked]="scheduleResult[i].days[4]"></td>
+                        <td class="checkbox-cell" (click)="updateTable($event, i, 5)" id="saturday"
+                          [class.checked]="scheduleResult[i].days[5]"></td>
+                        <td class="checkbox-cell" (click)="updateTable($event, i, 6)" id="sunday"
+                          [class.checked]="scheduleResult[i].days[6]"></td>
+                        <td class="checkbox-cell deleteInput"(click)="deleteRow(i)" id="delete-row">
+                          <div>
+                            <i class="fa fa-minus"></i>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+            
+                  <div class="add-row"><i class="fa fa-plus" (click)="addRow()"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="halls">
+            <label for="halls">HALLS</label>
+            <div class="halls-grid">
+                <ng-container *ngFor="let schedule of scheduleResult; let i = index">
+                    <ng-container *ngFor="let day of schedule.days; let j = index">
+                        <div *ngIf="day === true && schedule.hours.startTime !== null && schedule.hours.endTime !== null">
+                            <div class="hall">
+                                <label for="hall">{{ getDayName(j) }}, {{ schedule.hours.startTime | date: 'HH:mm' }}/{{ schedule.hours.endTime | date: 'HH:mm' }}</label>
+                                <input type="text" [(ngModel)]="schedule.halls[j]" placeholder="Hall name/number">
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div class="buttons">
+        <button>Create Group</button>
+        <button>Save Changes</button>
+    </div>
+</div>

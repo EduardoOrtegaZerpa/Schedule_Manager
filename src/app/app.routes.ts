@@ -1,7 +1,17 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { AdminComponent } from './admin/admin.component';
+import { DegreesComponent } from './admin/degrees/degrees.component';
+import { GroupsComponent } from './admin/groups/groups.component';
+import { SubjectsComponent } from './admin/subjects/subjects.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
+    {path: 'admin', component: AdminComponent, children: [
+        {path: 'degrees', component: DegreesComponent},
+        {path: 'subjects', component: SubjectsComponent},
+        {path: 'groups', component: GroupsComponent},
+        {path: '', redirectTo: 'groups', pathMatch: 'full'}
+    ]}
 ];

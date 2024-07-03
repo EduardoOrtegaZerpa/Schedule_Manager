@@ -1,0 +1,90 @@
+.schedule {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    justify-content: center;
+}
+
+table * {
+    text-align: center;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+    background-color: white;
+}
+
+table th {
+    width: 10em;
+    font-weight: bold;
+}
+
+.organization-data-schedule {
+    display: flex;
+    flex-direction: column;
+}
+
+.time-interval-input{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+
+.time-interval-input input{ 
+    background-color: #fcfcfc;
+}
+
+.checkbox-cell {
+    background-color: white;
+}
+
+.add-row {
+    margin-top: 16px;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+.add-row i {
+    font-size: x-large;
+    cursor: pointer;
+    color: white;
+}
+
+.deleteInput{
+    cursor: pointer;
+}
+
+.checked {
+    background-color: green;
+}
+
+.halls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.halls-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 40px;
+}
+
+.hall {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.hall label {
+    font-size: medium;
+}
