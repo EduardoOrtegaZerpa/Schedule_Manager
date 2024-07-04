@@ -86,5 +86,11 @@ input, button {
     border: none;
 }
 
-html, body, main { height: 100%; }
+html, body, main, #wrapper-container { height: 100%; }
 main { margin: 0; background: #f0f0f0;}
+
+#wrapper-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}

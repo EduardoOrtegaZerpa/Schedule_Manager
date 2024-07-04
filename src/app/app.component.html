@@ -1,4 +1,11 @@
 <main>
-  <app-header></app-header>
-  <router-outlet></router-outlet>
+  <div class="popups">
+    <app-create-degree *ngIf="popupService.createDegreeService.isOpen()"></app-create-degree>
+    <app-create-subject *ngIf="popupService.createSubjectService.isOpen()"></app-create-subject>
+    <app-create-group *ngIf="popupService.createGroupService.isOpen()"></app-create-group>
+  </div>
+  <div id="wrapper-container">
+    <app-header></app-header>
+    <router-outlet></router-outlet>
+  </div>
 </main>

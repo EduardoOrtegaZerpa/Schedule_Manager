@@ -26,6 +26,21 @@ export class AuthService {
       })
     );
   }
+
+  validateToken(): Observable<Boolean> {
+    return this.http.get(`${this.APIURL}/validate`).pipe(
+      map((res: any) => {
+        if (res.result) {
+          this.loginStatusSubject.next(true);
+          return true;
+        }
+        return false;
+      }),
+      catchError((error) => {
+        return of(false);
+      })
+    );
+  }
   
   logout() {
     this.loginStatusSubject.next(false);

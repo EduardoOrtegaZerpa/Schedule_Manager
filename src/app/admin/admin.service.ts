@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { Degree, Group, Schedule, Subject } from '../../interfaces';
 
 @Injectable({
@@ -12,56 +12,56 @@ export class AdminService {
 
   private APIURL = 'http://localhost:3001/api';
 
-  addDegree(degree: Degree) {
-    this.http.post(`${this.APIURL}/degrees`, degree).pipe(
+  addDegree(degree: Degree): Observable<Degree> {
+    return this.http.post(`${this.APIURL}/degrees`, degree).pipe(
       map((response: any) => {
         return response.response as Degree;
       }),
       catchError((error) => {
         return throwError(() => error);
       })
-    )
+    );
   }
 
-  updateDegree(degree: Degree) {
-    this.http.put(`${this.APIURL}/degrees/` + degree.id, degree).pipe(
+  updateDegree(degree: Degree): Observable<Degree> {
+    return this.http.put(`${this.APIURL}/degrees/` + degree.id, degree).pipe(
       map((response: any) => {
         return response.response as Degree;
       }),
       catchError((error) => {
         return throwError(() => error);
       })
-    )
+    );
   }
 
-  deleteDegree(id: string) {
-    this.http.delete(`${this.APIURL}/degrees/` + id).pipe(
+  deleteDegree(id: number): Observable<any> {
+    return this.http.delete(`${this.APIURL}/degrees/` + id).pipe(
       catchError((error) => {
         return throwError(() => error);
       })
-    )
+    );
   }
 
-  addSubject(subject: Subject, degreeId: string) {
-    this.http.post(`${this.APIURL}/subjects/` + degreeId, subject).pipe(
+  addSubject(subject: Subject, degreeId: string): Observable<Subject> {
+    return this.http.post(`${this.APIURL}/subjects/` + degreeId, subject).pipe(
       map((response: any) => {
         return response.response as Subject;
       }),
       catchError((error) => {
         return throwError(() => error);
       })
-    )
+    );
   }
 
-  updateSubject(subject: Subject) {
-    this.http.put(`${this.APIURL}/subjects/` + subject.id, subject).pipe(
+  updateSubject(subject: Subject): Observable<Subject> {
+    return this.http.put(`${this.APIURL}/subjects/` + subject.id, subject).pipe(
       map((response: any) => {
         return response.response as Subject;
       }),
       catchError((error) => {
         return throwError(() => error);
       })
-    )
+    );
   }
 
   deleteSubject(id: string) {
@@ -72,26 +72,26 @@ export class AdminService {
     )
   }
 
-  addGroup(group: Group, subjectId: string) {
-    this.http.post(`${this.APIURL}/groups/` + subjectId, group).pipe(
+  addGroup(group: Group, subjectId: string): Observable<Group> {
+    return this.http.post(`${this.APIURL}/groups/` + subjectId, group).pipe(
       map((response: any) => {
         return response.response as Group;
       }),
       catchError((error) => {
         return throwError(() => error);
       })
-    )
+    );
   }
 
-  updateGroup(group: Group) {
-    this.http.put(`${this.APIURL}/groups/` + group.id, group).pipe(
+  updateGroup(group: Group): Observable<Group> {
+    return this.http.put(`${this.APIURL}/groups/` + group.id, group).pipe(
       map((response: any) => {
         return response.response as Group;
       }),
       catchError((error) => {
         return throwError(() => error);
       })
-    )
+    );
   }
 
   deleteGroup(id: string) {
@@ -102,26 +102,26 @@ export class AdminService {
     )
   }
 
-  addSchedule(schedule: Schedule, groupId: string) {
-    this.http.post(`${this.APIURL}/schedules/` + groupId, schedule).pipe(
+  addSchedule(schedule: Schedule, groupId: string): Observable<Schedule> {
+    return this.http.post(`${this.APIURL}/schedules/` + groupId, schedule).pipe(
       map((response: any) => {
         return response.response as Schedule;
       }),
       catchError((error) => {
         return throwError(() => error);
       })
-    )
+    );
   }
 
-  updateSchedule(schedule: Schedule) {
-    this.http.put(`${this.APIURL}/schedules/` + schedule.id, schedule).pipe(
+  updateSchedule(schedule: Schedule): Observable<Schedule> {
+    return this.http.put(`${this.APIURL}/schedules/` + schedule.id, schedule).pipe(
       map((response: any) => {
         return response.response as Schedule;
       }),
       catchError((error) => {
         return throwError(() => error);
       })
-    )
+    );
   }
 
   deleteSchedule(id: string) {

@@ -1,0 +1,32 @@
+<div class="popup-container">
+    <div class="popup">
+        <div class="popup-header">
+            <h1>Create Degree</h1>
+            <button (click)="closePopup()">X</button>
+        </div>
+        <div class="popup-content">
+            <form [formGroup]="degreeForm" (ngSubmit)="createDegree()">
+                <div class="form-group">
+                    
+                    <div class="input">
+                        <label for="degreeName">NAME</label>
+                        <input id="degreeName" type="text" formControlName="degreeName" placeholder="Name of the degree">
+                        <div *ngIf="degreeForm.controls['degreeName'].invalid && (degreeForm.controls['degreeName'].dirty || degreeForm.controls['degreeName'].touched)" class="error">
+                          Name is required
+                        </div>
+                    </div>
+    
+                    <div class="input">
+                        <label for="degreeYears">YEARS</label>
+                        <input id="degreeYears" type="number" formControlName="degreeYears" placeholder="Years of the degree" min="0">
+                        <div *ngIf="degreeForm.controls['degreeYears'].invalid && (degreeForm.controls['degreeYears'].dirty || degreeForm.controls['degreeYears'].touched)" class="error">
+                          Years is required
+                        </div>
+                    </div>
+    
+                </div>
+                <button type="submit" [ngClass]="{'disabled': degreeForm.invalid}" [disabled]="degreeForm.invalid">Create</button>
+            </form>
+        </div>
+    </div>
+</div>

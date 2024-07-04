@@ -3,7 +3,7 @@
         <div class="selects">
             <div class="select">
                 <label for="degreeSelect">Select a degree</label>
-                <select id="degreeSelect" [(ngModel)]="degreeSelect">
+                <select id="degreeSelect" [(ngModel)]="degreeSelect" (change)="setDegree(degreeSelect)">
                     <option *ngFor="let degree of degrees" [ngValue]="degree">{{degree.name}}</option>
                 </select>
             </div>
@@ -29,7 +29,14 @@
         </form>
     </div>
     <div class="buttons">
-        <button>Create Degree</button>
-        <button [ngClass]="{'disabled': degreeForm.invalid}" [disabled]="degreeForm.invalid">Save Changes</button>
+        <button (click)="createDegree()">Create Degree</button>
+        <button 
+        [ngClass]="{'disabled': degreeForm.invalid || !checkIfChanged()}" 
+        [disabled]="degreeForm.invalid || !checkIfChanged()"
+        (click)="updateDegree()">Update Degree</button>
+        <button 
+        [ngClass]="{'disabled': degreeForm.invalid}" 
+        [disabled]="degreeForm.invalid"
+        (click)="deleteDegree()">Delete Degree</button>
     </div>
 </div>

@@ -11,7 +11,7 @@ interface ScheduleResult {
   };
   days: boolean[];
   halls: string[];
-  id: (Number | null)[];
+  id: (number | null)[];
   group_id: string | null;
 }
 

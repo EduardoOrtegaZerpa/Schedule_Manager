@@ -83,7 +83,7 @@ input {
     font-size: large;
     font-weight: bold;
     color: white;
-    background-color: #3D2C2E;
+    background-color: #886F68;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -101,7 +101,7 @@ input {
 }
 
 .disabled {
-    background-color: #3D2C2E !important;
+    background-color: #886F68 !important;
     color: #8C8C8C !important;
     cursor: not-allowed !important;
 }

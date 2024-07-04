@@ -1,0 +1,111 @@
+.popup-container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: default;
+    z-index: 9999;
+    background-color: #886F68;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+button {
+    background-color: white;
+    color: #3D2C2E;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.disabled {
+    background-color: #B0B0B0;
+    color: #7A7A7A;
+    cursor: not-allowed;
+}
+
+h1 {
+    color: white;
+    font-size: x-large;
+    margin: 0;
+    font-weight: bold;
+}
+
+h2 {
+    color: white;
+    font-size: large;
+    margin: 0;
+}
+
+h3 {
+    color: white;
+    font-size: medium;
+    margin: 0;
+}
+
+label {
+    color: white;
+}
+
+.popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    flex: 1;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    gap: 40px;
+}
+
+form button {
+    align-self: flex-end;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.error {
+    color: red;
+    font-size: small;
+}
