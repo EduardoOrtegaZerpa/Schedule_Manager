@@ -4,14 +4,17 @@ import { AdminComponent } from './admin/admin.component';
 import { DegreesComponent } from './admin/degrees/degrees.component';
 import { GroupsComponent } from './admin/groups/groups.component';
 import { SubjectsComponent } from './admin/subjects/subjects.component';
+import { AuthGuard } from './auth/auth.guard';
+import { NotAvailableComponent } from './not-available/not-available.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
-    {path: 'admin', component: AdminComponent, children: [
+    {path: 'notAvailable', component: NotAvailableComponent},
+    {path: 'admin', component: AdminComponent, canActivate: [AuthGuard] ,children: [
         {path: 'degrees', component: DegreesComponent},
         {path: 'subjects', component: SubjectsComponent},
         {path: 'groups', component: GroupsComponent},
         {path: '', redirectTo: 'groups', pathMatch: 'full'}
-    ]}
+    ]}  
 ];
