@@ -12,7 +12,7 @@ export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
     {path: 'notAvailable', component: NotAvailableComponent},
-    {path: 'admin', component: AdminComponent, children: [
+    {path: 'admin', component: AdminComponent, canActivate: [AuthGuard], children: [
         {path: 'degrees', component: DegreesComponent},
         {path: 'subjects', component: SubjectsComponent},
         {path: 'groups', component: GroupsComponent},

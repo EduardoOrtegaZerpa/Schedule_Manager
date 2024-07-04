@@ -35,6 +35,10 @@ export class DegreesComponent implements OnInit{
     this.getDegrees();
     this.createDegreeService.created.subscribe((res: Degree) => {
       this.degrees.push(res);
+      if (!this.degreeSelect) {
+        console.log("pues no hay degree select");
+        this.setDegree(res);
+      }
     });
   }
 
@@ -77,7 +81,7 @@ export class DegreesComponent implements OnInit{
           }
           return d;
         });
-        this.degreeSelect = res;
+        this.setDegree(res);
       });
     }
   }
