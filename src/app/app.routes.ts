@@ -16,5 +16,6 @@ export const routes: Routes = [
         {path: 'subjects', component: SubjectsComponent},
         {path: 'groups', component: GroupsComponent},
         {path: '', redirectTo: 'groups', pathMatch: 'full'}
-    ]}  
+    ]},
+    { path: '**', component: NotAvailableComponent }
 ];
