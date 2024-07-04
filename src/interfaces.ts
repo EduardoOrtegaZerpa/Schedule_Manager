@@ -1,6 +1,6 @@
 export interface Schedule {
-    id?: string;
-    group_id: string;
+    id?: Number;
+    group_id: Number;
     startTime: Date;
     endTime: Date;
     day: string;
@@ -8,23 +8,24 @@ export interface Schedule {
 }
 
 export interface Group {
-    id?: string;
-    degree_id: string;
-    subject_id: string;
+    id?: Number;
+    degree_id: Number;
+    subject_id: Number;
     name: string;
     details: string;
 }
 
 export interface Degree {
-    id?: string;
+    id?: Number;
     name: string;
-    years: number;
+    years: Number;
 }
 
 export interface Subject {
-    id?: string;
-    degree_id: string;
+    id?: Number;
+    degree_id: Number;
     name: string;
     acronomy: string;
-    year: number;
+    year: Number;
+    semester: Number;
 }

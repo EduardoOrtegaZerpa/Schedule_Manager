@@ -11,8 +11,8 @@ interface ScheduleResult {
   };
   days: boolean[];
   halls: string[];
-  id: (string | undefined)[];
-  group_id: string | undefined;
+  id: (Number | null)[];
+  group_id: string | null;
 }
 
 interface ScheduleRow {
@@ -47,7 +47,7 @@ export class GroupsComponent {
     hours: {startTime: null, endTime: null},
     days: [...this.days],
     id: [],
-    group_id: undefined,
+    group_id: null,
     halls: Array(7).fill('')
   }));
 
@@ -98,7 +98,7 @@ export class GroupsComponent {
 
     if (!this.scheduleResult[index].days[dayIndex] && startTime && endTime) {
       const newSchedule: Schedule = {
-        group_id: this.groupSelect?.id || '',
+        group_id: 3,
         startTime: startTime,
         endTime: endTime,
         day: this.getDayName(dayIndex),
@@ -114,13 +114,11 @@ export class GroupsComponent {
       });
     } else {
       const formattedSchedules = this.formatObject(this.scheduleResult[index]);
-      console.log(formattedSchedules);
       const scheduleToUpdate = formattedSchedules.find((schedule: Schedule) => schedule.day === this.getDayName(dayIndex));
       if (scheduleToUpdate) {
         this.deleteSchedule(scheduleToUpdate).subscribe((response: boolean) => {
-          console.log(response);
           if (response) {
-            this.scheduleResult[index].id[dayIndex] = undefined;
+            this.scheduleResult[index].id[dayIndex] = null;
             this.scheduleResult[index].days[dayIndex] = !this.scheduleResult[index].days[dayIndex];
           }
         });
@@ -222,7 +220,7 @@ export class GroupsComponent {
       hours: {startTime: null, endTime: null},
       days: newDays,
       id: [],
-      group_id: undefined,
+      group_id: null,
       halls: halls
     });
   }
@@ -263,15 +261,25 @@ export class GroupsComponent {
     this.scheduleResult.forEach((row: ScheduleResult) => {
         row.days.forEach((dia: boolean, index: number) => {
             if (!row.id.find(id => id === schedule.id) && dia) {
+              console.log("start time schedule: " + schedule.startTime, "start time row: " + row.hours.startTime)
+              console.log("end time schedule: " + schedule.endTime, "end time row: " + row.hours.endTime)
               if (
-                  schedule.day === this.getDayName(index) &&
-                  dia &&
-                  row.hours.startTime !== null &&
-                  row.hours.endTime !== null &&
-                  ((schedule.startTime >= row.hours.startTime && schedule.startTime <= row.hours.endTime) ||
-                  (schedule.endTime >= row.hours.startTime && schedule.endTime <= row.hours.endTime))
-                ) {
-                  overlapDetected = true;
+                schedule.day === this.getDayName(index) &&
+                dia &&
+                row.hours.startTime !== null &&
+                row.hours.endTime !== null &&
+              (
+                (
+                  (schedule.startTime >= row.hours.startTime && schedule.startTime <= row.hours.endTime) ||
+                  (schedule.endTime >= row.hours.startTime && schedule.endTime <= row.hours.endTime)
+                ) ||
+                (
+                  (row.hours.startTime >= schedule.startTime && row.hours.startTime <= schedule.endTime) ||
+                  (row.hours.endTime >= schedule.startTime && row.hours.endTime <= schedule.endTime)
+                )
+              )
+              ) {
+                overlapDetected = true;
               }
             }
         });
@@ -295,8 +303,8 @@ export class GroupsComponent {
       scheduleResult.days.forEach((dia: boolean, index: number) => {
         if (dia) {
           formattedSchedules.push({
-            id: scheduleResult.id[index],
-            group_id: "3",
+            id: scheduleResult.id[index] || undefined,
+            group_id: 3,
             startTime: startTime,
             endTime: endTime,
             day: this.getDayName(index),
