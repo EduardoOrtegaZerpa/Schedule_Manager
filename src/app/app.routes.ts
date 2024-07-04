@@ -6,6 +6,7 @@ import { GroupsComponent } from './admin/groups/groups.component';
 import { SubjectsComponent } from './admin/subjects/subjects.component';
 import { AuthGuard } from './auth/auth.guard';
 import { NotAvailableComponent } from './not-available/not-available.component';
+import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -17,5 +18,6 @@ export const routes: Routes = [
         {path: 'groups', component: GroupsComponent},
         {path: '', redirectTo: 'groups', pathMatch: 'full'}
     ]},
+    {path: 'login', component: LoginComponent},
     { path: '**', component: NotAvailableComponent }
 ];

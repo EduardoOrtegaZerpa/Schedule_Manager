@@ -1,0 +1,34 @@
+<div class="login">
+    <div class="content">
+      <h1>Login with an Admin Account</h1>
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="inputs">
+          <div class="input-container">
+            <label for="username">Username</label>
+            <input type="username" id="username" formControlName="username" placeholder="Enter your username...">
+            <div *ngIf="username?.invalid && (username?.dirty || username?.touched)" class="error">
+              <div *ngIf="username?.errors?.['required']">Username is required.</div>
+              <div *ngIf="username?.errors?.['email']">Invalid username format.</div>
+            </div>
+          </div>
+          <div class="input-container">
+            <label for="password">Password</label>
+            <input type="password" id="password" formControlName="password" placeholder="Enter your password...">
+            <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="error">
+              <div *ngIf="password?.errors?.['required']">Password is required.</div>
+            </div>
+          </div>
+          <button type="submit" [disabled]="loginForm.invalid">Login</button>
+        </div>
+      </form>
+    </div>
+    <div class="image">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 422 391" fill="none">
+        <rect x="53.3804" y="30.1619" width="330.496" height="322.941" rx="5.27559" fill="#886F68" fill-opacity="0.58"/>
+        <rect x="320.585" width="100.586" height="68.6942" rx="8.20647" fill="#3D2C2E" fill-opacity="0.94"/>
+        <rect y="322.306" width="100.586" height="68.6942" rx="8.20647" fill="#3D2C2E" fill-opacity="0.88"/>
+        <rect x="8.31252" y="1.05471" width="272.769" height="224.257" rx="6.67982" stroke="#886F68" stroke-width="2.10942"/>
+      </svg>
+    </div>
+  </div>
+  
