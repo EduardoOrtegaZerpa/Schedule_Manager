@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CreateGroupService } from './create-group-service.service';
 import { AdminService } from '../../admin/admin.service';
 import { Group, Subject } from '../../../interfaces';
@@ -19,7 +19,7 @@ export class CreateGroupComponent implements OnInit{
 
   constructor(private fb: FormBuilder, private groupService: CreateGroupService, private adminService: AdminService) {
     this.groupForm = this.fb.group({
-      groupName: [''],
+      groupName: ['', Validators.required],
       groupDetails: ['']
     });
   }

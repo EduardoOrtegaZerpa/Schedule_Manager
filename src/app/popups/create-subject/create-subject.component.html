@@ -7,6 +7,11 @@
         <div class="popup-content">
             <form [formGroup]="subjectForm" (ngSubmit)="createSubject()">
                 <div class="form-group">
+
+                    <div class="input">
+                        <label for="degreeName">Degree Name</label>
+                        <input id="degreeName" type="text" placeholder={{degree?.name}} disabled>
+                    </div>
                     
                     <div class="input">
                         <label for="subjectName">NAME</label>

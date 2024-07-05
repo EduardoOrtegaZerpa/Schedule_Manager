@@ -3,20 +3,20 @@
         <div class="selects">
             <div class="select">
                 <label for="degreeSelect">Select a degree</label>
-                <select id="degreeSelect" [(ngModel)]="degreeSelect">
+                <select id="degreeSelect" [(ngModel)]="degreeSelect" (change)="degreeSelect && onDegreeChange(degreeSelect)">
                     <option *ngFor="let degree of degrees" [ngValue]="degree">{{degree.name}}</option>
                 </select>
             </div>
             <div class="select">
                 <label for="subjectSelect">Select a subject</label>
-                <select id="subjectSelect" [(ngModel)]="subjectSelect">
-                    <option *ngFor="let subject of subjects" [ngValue]="subject">{{subject.name}}</option>
+                <select id="subjectSelect" [(ngModel)]="subjectSelect" (change)="subjectSelect && onSubjectChange(subjectSelect)">
+                    <option *ngFor="let subject of filteredSubjects" [ngValue]="subject">{{subject.name}}</option>
                 </select>
             </div>
             <div class="select">
                 <label for="groupSelect">Select a group</label>
-                <select id="groupSelect" [(ngModel)]="groupSelect">
-                    <option *ngFor="let group of groups" [ngValue]="group">{{group.name}}</option>
+                <select id="groupSelect" [(ngModel)]="groupSelect" (change)="groupSelect && onGroupChange(groupSelect)">
+                    <option *ngFor="let group of filteredGroups" [ngValue]="group">{{group.name}}</option>
                 </select>
             </div>
         </div>
@@ -33,9 +33,6 @@
             <div class="input">
               <label for="groupDetails">DETAILS</label>
               <input id="groupDetails" type="text" formControlName="groupDetails" placeholder="Details of the group">
-              <div *ngIf="groupForm.controls['groupDetails'].invalid && (groupForm.controls['groupDetails'].dirty || groupForm.controls['groupDetails'].touched)" class="error">
-                Details are required
-              </div>
             </div>
           </div>
         </form>
@@ -111,7 +108,16 @@
         </div>
     </div>
     <div class="buttons">
-        <button>Create Group</button>
-        <button [ngClass]="{'disabled': groupForm.invalid}" [disabled]="groupForm.invalid">Update Group</button>
+        <button (click)="createGroup()"
+        [ngClass]="{'disabled': !subjectSelect}"
+        [disabled]="!subjectSelect">Create Group</button>
+        <button 
+        [ngClass]="{'disabled': groupForm.invalid || !checkIfChanges()}" 
+        [disabled]="groupForm.invalid || !checkIfChanges()"
+        (click)="updateGroup()">Update Group</button>
+        <button 
+        [ngClass]="{'disabled': groupForm.invalid}" 
+        [disabled]="groupForm.invalid"
+        (click)="deleteGroup()">Delete Group</button>
     </div>
 </div>

@@ -89,10 +89,7 @@ export class SubjectsComponent implements OnInit{
 
   onDegreeChange(Degree: Degree) {
     this.degreeSelect = Degree;
-    console.log(this.degreeSelect);
-    console.log(this.subjects);
     this.filteredSubjects = this.subjects.filter(subject => subject.degree_id === this.degreeSelect?.id);
-    console.log(this.filteredSubjects);
     this.setSubject(this.filteredSubjects[0]);
   }
 

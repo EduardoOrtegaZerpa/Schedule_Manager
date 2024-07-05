@@ -15,6 +15,7 @@
             </div>
         </div>
         <form class="inputs" [formGroup]="subjectForm" #formRef="ngForm">
+
             <div class="input">
               <label for="subjectName">NAME</label>
               <input id="subjectName" type="text" formControlName="subjectName" placeholder="Name of the subject">
@@ -52,7 +53,9 @@
         </form>
     </div>
     <div class="buttons">
-        <button (click)="createSubject()">Create Subject</button>
+        <button (click)="createSubject()"
+        [disabled]="!degreeSelect"
+        [ngClass]="{'disabled': !degreeSelect}">Create Subject</button>
         <button 
         [disabled]="subjectForm.invalid || !checkIfChanged()" 
         [ngClass]="{'disabled': subjectForm.invalid || !checkIfChanged()}"

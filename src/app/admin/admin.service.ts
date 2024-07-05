@@ -94,12 +94,12 @@ export class AdminService {
     );
   }
 
-  deleteGroup(id: number) {
-    this.http.delete(`${this.APIURL}/groups/` + id).pipe(
+  deleteGroup(id: number): Observable<any> {
+    return this.http.delete(`${this.APIURL}/groups/` + id).pipe(
       catchError((error) => {
         return throwError(() => error);
       })
-    )
+    );
   }
 
   addSchedule(schedule: Schedule, groupId: number): Observable<Schedule> {
@@ -124,12 +124,12 @@ export class AdminService {
     );
   }
 
-  deleteSchedule(id: number) {
-    this.http.delete(`${this.APIURL}/schedules/` + id).pipe(
+  deleteSchedule(id: number): Observable<any> {
+    return this.http.delete(`${this.APIURL}/schedules/` + id).pipe(
       catchError((error) => {
         return throwError(() => error);
       })
-    )
+    );
   }
 
 

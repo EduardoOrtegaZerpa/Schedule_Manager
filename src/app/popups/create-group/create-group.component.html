@@ -7,6 +7,11 @@
         <div class="popup-content">
             <form [formGroup]="groupForm" (ngSubmit)="createGroup()">
                 <div class="form-group">
+
+                    <div class="input">
+                        <label for="subjectName">Subject Name</label>
+                        <input id="subjectName" type="text" placeholder={{subject?.name}} disabled>
+                    </div>
                     
                     <div class="input">
                         <label for="groupName">NAME</label>
@@ -18,9 +23,9 @@
     
                     <div class="input">
                         <label for="groupDetails">DETAILS</label>
-                        <input id="groupDetails" type="number" formControlName="groupDetails" placeholder="Year of the group" min="0">
+                        <input id="groupDetails" type="text" formControlName="groupDetails" placeholder="Details of the group">
                         <div *ngIf="groupForm.controls['groupDetails'].invalid && (groupForm.controls['groupDetails'].dirty || groupForm.controls['groupDetails'].touched)" class="error">
-                          Years is required
+                          Details are required
                         </div>
                     </div>
     
