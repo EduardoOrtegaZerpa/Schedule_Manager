@@ -42,7 +42,7 @@ export class AdminService {
     );
   }
 
-  addSubject(subject: Subject, degreeId: string): Observable<Subject> {
+  addSubject(subject: Subject, degreeId: number): Observable<Subject> {
     return this.http.post(`${this.APIURL}/subjects/` + degreeId, subject).pipe(
       map((response: any) => {
         return response.response as Subject;
@@ -64,15 +64,15 @@ export class AdminService {
     );
   }
 
-  deleteSubject(id: string) {
-    this.http.delete(`${this.APIURL}/subjects/` + id).pipe(
+  deleteSubject(id: number): Observable<any> {
+    return this.http.delete(`${this.APIURL}/subjects/` + id).pipe(
       catchError((error) => {
         return throwError(() => error);
       })
-    )
+    );
   }
 
-  addGroup(group: Group, subjectId: string): Observable<Group> {
+  addGroup(group: Group, subjectId: number): Observable<Group> {
     return this.http.post(`${this.APIURL}/groups/` + subjectId, group).pipe(
       map((response: any) => {
         return response.response as Group;
@@ -94,7 +94,7 @@ export class AdminService {
     );
   }
 
-  deleteGroup(id: string) {
+  deleteGroup(id: number) {
     this.http.delete(`${this.APIURL}/groups/` + id).pipe(
       catchError((error) => {
         return throwError(() => error);
@@ -102,7 +102,7 @@ export class AdminService {
     )
   }
 
-  addSchedule(schedule: Schedule, groupId: string): Observable<Schedule> {
+  addSchedule(schedule: Schedule, groupId: number): Observable<Schedule> {
     return this.http.post(`${this.APIURL}/schedules/` + groupId, schedule).pipe(
       map((response: any) => {
         return response.response as Schedule;
@@ -124,7 +124,7 @@ export class AdminService {
     );
   }
 
-  deleteSchedule(id: string) {
+  deleteSchedule(id: number) {
     this.http.delete(`${this.APIURL}/schedules/` + id).pipe(
       catchError((error) => {
         return throwError(() => error);

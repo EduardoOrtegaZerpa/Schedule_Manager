@@ -261,8 +261,6 @@ export class GroupsComponent {
     this.scheduleResult.forEach((row: ScheduleResult) => {
         row.days.forEach((dia: boolean, index: number) => {
             if (!row.id.find(id => id === schedule.id) && dia) {
-              console.log("start time schedule: " + schedule.startTime, "start time row: " + row.hours.startTime)
-              console.log("end time schedule: " + schedule.endTime, "end time row: " + row.hours.endTime)
               if (
                 schedule.day === this.getDayName(index) &&
                 dia &&

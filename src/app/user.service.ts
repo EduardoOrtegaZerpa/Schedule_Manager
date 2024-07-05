@@ -23,7 +23,7 @@ export class UserService {
     );
   }
 
-  getDegreeById(id: string): Observable<Degree> {
+  getDegreeById(id: number): Observable<Degree> {
     return this.http.get(`${this.APIURL}/degrees/` + id).pipe(
       map((response: any) => {
         return response.response as Degree;
@@ -45,7 +45,7 @@ export class UserService {
     );
   }
 
-  getSubjectById(id: string): Observable<Subject> {
+  getSubjectById(id: number): Observable<Subject> {
     return this.http.get(`${this.APIURL}/subjects/` + id).pipe(
       map((response: any) => {
         return response.response as Subject;
@@ -56,7 +56,7 @@ export class UserService {
     );
   }
 
-  getSubjectsByDegreeId(degreeId: string): Observable<Subject[]> {
+  getSubjectsByDegreeId(degreeId: number): Observable<Subject[]> {
     return this.http.get(`${this.APIURL}/degrees/` + degreeId + '/subjects').pipe(
       map((response: any) => {
         return response.response as Subject[];
@@ -78,7 +78,7 @@ export class UserService {
     );
   }
 
-  getGroupById(id: string): Observable<Group> {
+  getGroupById(id: number): Observable<Group> {
     return this.http.get(`${this.APIURL}/groups/` + id).pipe(
       map((response: any) => {
         return response.response as Group;
@@ -89,7 +89,7 @@ export class UserService {
     );
   }
 
-  getGroupsBySubjectId(subjectId: string): Observable<Group[]> {
+  getGroupsBySubjectId(subjectId: number): Observable<Group[]> {
     return this.http.get(`${this.APIURL}/subjects/` + subjectId + '/groups').pipe(
       map((response: any) => {
         return response.response as Group[];
@@ -111,7 +111,7 @@ export class UserService {
     );
   }
 
-  getScheduleById(id: string): Observable<Schedule> {
+  getScheduleById(id: number): Observable<Schedule> {
     return this.http.get(`${this.APIURL}/schedules/` + id).pipe(
       map((response: any) => {
         return response.response as Schedule;
@@ -122,7 +122,7 @@ export class UserService {
     );
   }
 
-  getSchedulesByGroupId(groupId: string): Observable<Schedule[]> {
+  getSchedulesByGroupId(groupId: number): Observable<Schedule[]> {
     return this.http.get(`${this.APIURL}/groups/` + groupId + '/schedules').pipe(
       map((response: any) => {
         return response.response as Schedule[];

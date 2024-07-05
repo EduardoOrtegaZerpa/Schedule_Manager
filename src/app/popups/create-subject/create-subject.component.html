@@ -1,1 +1,48 @@
-<p>create-subject works!</p>
+<div class="popup-container">
+    <div class="popup">
+        <div class="popup-header">
+            <h1>Create Degree</h1>
+            <button (click)="closePopup()">X</button>
+        </div>
+        <div class="popup-content">
+            <form [formGroup]="subjectForm" (ngSubmit)="createSubject()">
+                <div class="form-group">
+                    
+                    <div class="input">
+                        <label for="subjectName">NAME</label>
+                        <input id="subjectName" type="text" formControlName="subjectName" placeholder="Name of the subject">
+                        <div *ngIf="subjectForm.controls['subjectName'].invalid && (subjectForm.controls['subjectName'].dirty || subjectForm.controls['subjectName'].touched)" class="error">
+                          Name is required
+                        </div>
+                    </div>
+    
+                    <div class="input">
+                        <label for="subjectYear">YEAR</label>
+                        <input id="subjectYear" type="number" formControlName="subjectYear" placeholder="Year of the subject">
+                        <div *ngIf="subjectForm.controls['subjectYear'].invalid && (subjectForm.controls['subjectYear'].dirty || subjectForm.controls['subjectYear'].touched)" class="error">
+                          Year is required
+                        </div>
+                    </div>
+
+                    <div class="input">
+                        <label for="subjectSemester">SEMESTER</label>
+                        <input id="subjectSemester" type="number" formControlName="subjectSemester" placeholder="Semester of the subject">
+                        <div *ngIf="subjectForm.controls['subjectSemester'].invalid && (subjectForm.controls['subjectSemester'].dirty || subjectForm.controls['subjectSemester'].touched)" class="error">
+                          Semester is required
+                        </div>
+                    </div>
+
+                    <div class="input">
+                        <label for="subjectAcronim">ACRONYM</label>
+                        <input id="subjectAcronim" type="text" formControlName="subjectAcronim" placeholder="Acronym of the subject">
+                        <div *ngIf="subjectForm.controls['subjectAcronim'].invalid && (subjectForm.controls['subjectAcronim'].dirty || subjectForm.controls['subjectAcronim'].touched)" class="error">
+                          Acronym is required
+                        </div>
+                    </div>
+    
+                </div>
+                <button type="submit" [ngClass]="{'disabled': subjectForm.invalid}" [disabled]="subjectForm.invalid">Create</button>
+            </form>
+        </div>
+    </div>
+</div>

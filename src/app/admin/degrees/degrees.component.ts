@@ -36,7 +36,6 @@ export class DegreesComponent implements OnInit{
     this.createDegreeService.created.subscribe((res: Degree) => {
       this.degrees.push(res);
       if (!this.degreeSelect) {
-        console.log("pues no hay degree select");
         this.setDegree(res);
       }
     });
@@ -103,7 +102,7 @@ export class DegreesComponent implements OnInit{
   }
 
 
-  checkIfChanged() {
+  checkIfChanged(): boolean {
     return this.degreeSelect?.name !== this.degreeForm.value.degreeName ||  this.degreeSelect?.years !== this.degreeForm.value.degreeYears;
   }
 

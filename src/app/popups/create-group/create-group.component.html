@@ -1,1 +1,32 @@
-<p>create-group works!</p>
+<div class="popup-container">
+    <div class="popup">
+        <div class="popup-header">
+            <h1>Create Degree</h1>
+            <button (click)="closePopup()">X</button>
+        </div>
+        <div class="popup-content">
+            <form [formGroup]="groupForm" (ngSubmit)="createGroup()">
+                <div class="form-group">
+                    
+                    <div class="input">
+                        <label for="groupName">NAME</label>
+                        <input id="groupName" type="text" formControlName="groupName" placeholder="Name of the group">
+                        <div *ngIf="groupForm.controls['groupName'].invalid && (groupForm.controls['groupName'].dirty || groupForm.controls['groupName'].touched)" class="error">
+                          Name is required
+                        </div>
+                    </div>
+    
+                    <div class="input">
+                        <label for="groupDetails">DETAILS</label>
+                        <input id="groupDetails" type="number" formControlName="groupDetails" placeholder="Year of the group" min="0">
+                        <div *ngIf="groupForm.controls['groupDetails'].invalid && (groupForm.controls['groupDetails'].dirty || groupForm.controls['groupDetails'].touched)" class="error">
+                          Years is required
+                        </div>
+                    </div>
+    
+                </div>
+                <button type="submit" [ngClass]="{'disabled': groupForm.invalid}" [disabled]="groupForm.invalid">Create</button>
+            </form>
+        </div>
+    </div>
+</div>

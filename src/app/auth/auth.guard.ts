@@ -17,10 +17,8 @@ export const AuthGuard: CanActivateFn = (
   return authService.loginStatus$().pipe(
     switchMap((isLoggedIn: boolean): Observable<boolean | UrlTree> => {
       if (isLoggedIn) {
-        console.log('User is logged in');
         return of(true);
       } else {
-        console.log('User is not logged in');
         return of(router.createUrlTree(['/notAvailable']));
       }
     })

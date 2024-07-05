@@ -3,14 +3,14 @@
         <div class="selects">
             <div class="select">
                 <label for="degreeSelect">Select a degree</label>
-                <select id="degreeSelect" [(ngModel)]="degreeSelect">
+                <select id="degreeSelect" [(ngModel)]="degreeSelect" (change)="degreeSelect && onDegreeChange(degreeSelect)">
                     <option *ngFor="let degree of degrees" [ngValue]="degree">{{degree.name}}</option>
                 </select>
             </div>
             <div class="select">
                 <label for="subjectSelect">Select a subject</label>
-                <select id="subjectSelect" [(ngModel)]="subjectSelect">
-                    <option *ngFor="let subject of subjects" [ngValue]="subject">{{subject.name}}</option>
+                <select id="subjectSelect" [(ngModel)]="subjectSelect" (change)="subjectSelect && onSubjectChange(subjectSelect)">
+                    <option *ngFor="let subject of filteredSubjects" [ngValue]="subject">{{subject.name}}</option>
                 </select>
             </div>
         </div>
@@ -41,15 +41,25 @@
             
             <div class="input">
               <label for="subjectSemester">SEMESTER</label>
-              <input id="subjectSemester" type="number" formControlName="subjectSemester" placeholder="Semester of the subject" min="1" max="2">
-              <div *ngIf="subjectForm.controls['subjectSemester'].invalid && (subjectForm.controls['subjectSemester'].dirty || subjectForm.controls['subjectSemester'].touched)" class="error">
+              <input id="subjectSemester" type="number" formControlName="subjectSemester" placeholder="Semester of the subject">
+              <div *ngIf="subjectForm.get('subjectSemester')?.hasError('required') && (subjectForm.get('subjectSemester')?.dirty || subjectForm.get('subjectSemester')?.touched)" class="error">
                 Semester is required
+              </div>
+              <div *ngIf="subjectForm.get('subjectSemester')?.hasError('min')" class="error">
+                Semester must be greater than or equal to 1
               </div>
             </div>
         </form>
     </div>
     <div class="buttons">
-        <button>Create Subject</button>
-        <button [disabled]="subjectForm.invalid" [ngClass]="{'disabled': subjectForm.invalid}">Save Changes</button>
+        <button (click)="createSubject()">Create Subject</button>
+        <button 
+        [disabled]="subjectForm.invalid || !checkIfChanged()" 
+        [ngClass]="{'disabled': subjectForm.invalid || !checkIfChanged()}"
+        (click)="updateSubject()">Update Subject</button>
+        <button
+        [disabled]="subjectForm.invalid"
+        [ngClass]="{'disabled': subjectForm.invalid}"
+        (click)="deleteSubject()">Delete Subject</button>
     </div>
 </div>

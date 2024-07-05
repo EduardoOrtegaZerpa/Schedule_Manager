@@ -1,42 +1,35 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Degree, Subject } from '../../../interfaces';
+import { Degree, Group, Subject } from '../../../interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CreateGroupService {
 
+  created: EventEmitter<Group> = new EventEmitter<Group>();
+
   private isOpenSubject = new BehaviorSubject<boolean>(false);
   isOpen$ = this.isOpenSubject.asObservable();
 
-  private degreeSubject = new BehaviorSubject<Degree | null>(null);
-  degree$ = this.degreeSubject.asObservable();
-
-  private subjectSubject = new BehaviorSubject<Subject | null>(null);
+  private subjectSubject = new BehaviorSubject<Subject | undefined>(undefined);
   subject$ = this.subjectSubject.asObservable();
 
   openCreateGroupPopup(degree: Degree, subject: Subject): void {
-    this.degreeSubject.next(degree);
     this.subjectSubject.next(subject);
     this.isOpenSubject.next(true);
   }
 
   closeCreateGroupPopup(): void {
     this.isOpenSubject.next(false);
-    this.degreeSubject.next(null);
-    this.subjectSubject.next(null);
+    this.subjectSubject.next(undefined);
   }
 
   isOpen(): boolean {
     return this.isOpenSubject.getValue();
   }
 
-  getDegree(): Degree | null {
-    return this.degreeSubject.getValue();
-  }
-
-  getSubject(): Subject | null {
+  getSubject(): Subject | undefined {
     return this.subjectSubject.getValue();
   }
 }
