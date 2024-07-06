@@ -51,6 +51,13 @@ h5 {
     padding: 10px;
 }
 
+.disabled {
+    color: white;
+    background-color: rgb(150, 150, 150);
+    padding: 10px;
+    cursor: not-allowed;
+}
+
 .home {
     display: flex;
     flex-direction: row;

@@ -1,8 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Group, Schedule, Subject } from '../../../interfaces';
-import { SchedulesInfo } from '../schedule.component';
+import { Group, Schedule, Subject, SchedulesInfo } from '../../../interfaces';
 import { ScheduleItem } from './schedule-item';
 import { CommonModule } from '@angular/common';
+import { ScheduleService } from '../schedule.service';
+
 
 export interface Item{
   group: Group;
@@ -12,7 +13,12 @@ export interface Item{
   hall: string;
   getStartTime(): Date;
   getEndTime(): Date;
-  getHeight(): number;
+  getHeight(): Height;
+}
+
+export interface Height {
+  position: number;
+  height: number;
 }
 
 @Component({
@@ -28,9 +34,16 @@ export class ColumnComponent implements OnInit, OnChanges{
   @Input() day: number = 0;
   items: Item[] = [];
   schedulesInfo: SchedulesInfo[] = [];
+
+  constructor (private scheduleService: ScheduleService) { }
   
   ngOnInit(): void {
-
+    this.scheduleService.scheduleInfo$.subscribe({
+      next: (schedulesInfo) => {
+        this.schedulesInfo = schedulesInfo;
+        this.populateItems();
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -60,6 +73,7 @@ export class ColumnComponent implements OnInit, OnChanges{
         ...scheduleInfo.schedule,
         startTime: this.convertToUnixTime(new Date(scheduleInfo.schedule.startTime)),
         endTime: this.convertToUnixTime(new Date(scheduleInfo.schedule.endTime)),
+        hall: scheduleInfo.schedule.hall
       }
 
       this.items.push(new ScheduleItem(convertedSchedule, scheduleInfo.group, scheduleInfo.subject));

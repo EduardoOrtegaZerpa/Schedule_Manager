@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <button (click)="resetSubjects()">Reset</button>
+            <button (click)="reset()">Reset</button>
         </div>
     </div>
 
@@ -51,19 +51,34 @@
     <div class="side-container">
         <div class="side-info">
             <h2>GENERATE A NEW RESULT</h2>
-            <button>New Result</button>
+            <button
+            (click)="generateSchedule()"
+            [disabled]="!selectedSubjects.length"
+            [ngClass]="{'disabled': !selectedSubjects.length}"
+            >New Result</button>
         </div>
 
         <div class="side-info">
             <h2>GENERATE LESS OPTIMAL RESULTS</h2>
             <p>If you do not get the expected result with the previous option, try to obtain a less optimal but correct result.</p>
-            <button>Another Result</button>
+            <button
+            [disabled]="!schedulesInfo.length"
+            [ngClass]="{'disabled': !schedulesInfo.length}"
+            >Another Result</button>
         </div>
 
         <div class="side-stats">
             <h2>STATISTICS</h2>
-            <p>Free days: </p>
-            <p>Weekly occupied hours: </p>
+            <p>Free days: {{daysFree}}</p>
+            <p>Weekly occupied hours: {{hoursFree}}</p>
+        </div>
+
+        <div class="side-stats">
+            <h2>INFORMATION</h2>
+            <div *ngFor="let item of filterScheduleInfo()">
+                <p>Asignatura: {{ item.subject.name }}</p>
+                <p>Grupo: {{ item.group.name }}</p>
+            </div>
         </div>
     </div>
 

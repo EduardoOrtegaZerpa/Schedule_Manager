@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { Degree, Subject } from '../../interfaces';
+import { Degree, Subject, SchedulesInfo, AlgorithmResponse } from '../../interfaces';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../user.service';
 import { EMPTY, forkJoin } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { ScheduleComponent } from '../schedule/schedule.component';
-import { SchedulesInfo } from '../schedule/schedule.component';
+import { ScheduleService } from '../schedule/schedule.service';
 
 
 @Component({
@@ -25,9 +25,14 @@ export class HomeComponent {
   selectedSubjects: Subject[] = [];
   filterTerm: string = '';
   selectedSemester: number = 1;
+  schedulesInfo: SchedulesInfo[] = [];
+  daysFree: number = 0;
+  hoursFree: number = 0;
+
+  private weekHours: number = 24 * 7;
 
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private scheduleService: ScheduleService) {
     this.loadDegreesWithSubjects();
   }
 
@@ -98,10 +103,15 @@ export class HomeComponent {
       return;
     }
     this.selectedSemester = semester;
+    this.scheduleService.setScheduleInfo(this.filterScheduleInfo());
   }
 
-  resetSubjects() {
+  reset() {
     this.selectedSubjects = [];
+    this.daysFree = 0;
+    this.hoursFree = 0;
+    this.schedulesInfo = [];
+    this.scheduleService.setScheduleInfo([]);
   }
 
   isYearSelected(degreeId: number, year: number): boolean {
@@ -137,6 +147,14 @@ export class HomeComponent {
     console.error(`No subjects found for degree: ${degree.name}`, error);
   }
 
+  handleScheduleError(error: any) {
+    console.error('Error fetching schedule', error);
+  }
+
+  handleConversionError(error: any) {
+    console.error('Error converting response', error);
+  }
+
   applyFilter() {
     const filterValue = this.filterTerm.toLowerCase().trim();
     this.filteredSubjects = this.subjects.filter(subject => subject.name.toLowerCase().includes(filterValue));
@@ -145,5 +163,32 @@ export class HomeComponent {
   clearFilter() {
     this.filterTerm = '';
     this.filteredSubjects = this.subjects;
+  }
+
+  filterScheduleInfo() {
+    return this.schedulesInfo.filter(scheduleInfo => scheduleInfo.subject.semester === this.selectedSemester);
+  }
+
+  generateSchedule() {
+
+    const subjectsId: number[] = this.selectedSubjects.map(subject => subject.id!);
+    this.userService.generateNoConflictSchedules(subjectsId).subscribe({
+      next: (algorithmResponse: AlgorithmResponse) => {
+        this.showSchedule(algorithmResponse);
+        this.daysFree = algorithmResponse.days;
+        this.hoursFree = (this.weekHours - algorithmResponse.hours) > 0 ? this.weekHours - algorithmResponse.hours : 0;
+      },
+      error: (error) => this.handleScheduleError(error)
+    });
+  }
+
+  showSchedule(algorithmResponse: AlgorithmResponse) {
+    this.userService.convertResponseToScheduleInfo(algorithmResponse).subscribe({
+      next: (schedulesInfo: SchedulesInfo[]) => {
+        this.schedulesInfo = schedulesInfo;
+        this.scheduleService.setScheduleInfo(this.filterScheduleInfo());
+      },
+      error: (error) => this.handleConversionError(error)
+    });
   }
 }

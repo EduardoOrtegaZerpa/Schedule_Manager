@@ -7,6 +7,23 @@ export interface Schedule {
     hall: string;
 }
 
+export interface SchedulesInfo {
+    schedule: Schedule;
+    subject: Subject;
+    group: Group;
+}
+
+export interface AlgorithmResponse {
+    days: number;
+    hours: number;
+    subjects: AlgorithmSubject[];
+}
+
+export interface AlgorithmSubject {
+    subject: number;
+    group: number;
+}
+
 export interface Group {
     id?: number;
     degree_id: number;

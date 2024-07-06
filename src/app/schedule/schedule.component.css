@@ -9,21 +9,33 @@
 }
 
 .header-cell {
+    position: relative;
     flex: 1;
     padding: 20px;
     text-align: center;
     vertical-align: middle;
     font-weight: 700;
     height: 20px;
+    background-color: #886F68;
+    color: white;
+}
+
+.header-cell::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     background-color: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    z-index: 1;
 }
 
 
 .hora {
     display: flex;
     min-height: 40px;
-    border-top: 1px solid lightslategrey;
+    border-top: 1px solid #3D2C2E;;
     align-items: center;
     justify-content: center;
 }

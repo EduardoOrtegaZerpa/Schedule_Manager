@@ -1,5 +1,5 @@
 import { Group, Schedule, Subject } from "../../../interfaces";
-import { Item } from "./column.component";
+import { Height, Item } from "./column.component";
 
 
 export class ScheduleItem implements Item{
@@ -25,14 +25,15 @@ export class ScheduleItem implements Item{
       return this.endTime;
     }
   
-    getHeight(): number {
+    getHeight(): Height {
         if (this.startTime.getHours() === 0 && this.startTime.getMinutes() === 0 && this.endTime.getHours() === 0 && this.endTime.getMinutes() === 0){
-          return 100;
+          return { position: 0, height: 100 };
         }
         const dayTotalMiliseconds = 24 * 1000 * 60 * 60;
-        let diff = this.endTime.getTime() - this.startTime.getTime();
-        diff = diff / dayTotalMiliseconds;
-        return diff * 100;
+
+        const position = this.startTime.getTime() * 100 / dayTotalMiliseconds;
+        const height = (this.endTime.getTime() - this.startTime.getTime()) * 100 / dayTotalMiliseconds;
+        return { position, height };
     }
   
   }

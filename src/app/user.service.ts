@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, catchError, throwError, Observable } from 'rxjs';
-import { Degree, Subject, Group, Schedule } from '../interfaces';
+import { Degree, Subject, Group, Schedule, AlgorithmResponse, SchedulesInfo } from '../interfaces';
+
 
 @Injectable({
   providedIn: 'root'
@@ -131,6 +132,52 @@ export class UserService {
         return throwError(() => error);
       })
     );
+  }
+
+  generateNoConflictSchedules(subjectIds: number[]): Observable<AlgorithmResponse> {
+    return this.http.post(`${this.APIURL}/generate/schedule`, { subjectIds }).pipe(
+      map((response: any) => {
+        return response.response as AlgorithmResponse;
+      }),
+      catchError((error) => {
+        throwError(() => error);
+        return [];
+      })
+    );
+  }
+
+  convertResponseToScheduleInfo(response: AlgorithmResponse): Observable<SchedulesInfo[]> {
+      return new Observable<SchedulesInfo[]>((observer) => {
+          const schedulesInfo: SchedulesInfo[] = [];
+          response.subjects.map((subject) => {
+              this.getGroupById(subject.group).subscribe({
+                  next: (group: Group) => {
+                      this.getSubjectById(subject.subject).subscribe({
+                          next: (subject: Subject) => {
+                              this.getSchedulesByGroupId(group.id!).subscribe({
+                                  next: (schedules: Schedule[]) => {
+                                      schedules.map((schedule) => {
+                                          schedulesInfo.push({
+                                              subject,
+                                              group,
+                                              schedule
+                                          });
+                                      });
+                                  },
+                                  complete: () => {
+                                      observer.next(schedulesInfo);
+                                      observer.complete();
+                                  },
+                                  error: (error) => {
+                                      observer.error(error);
+                                  }
+                              });
+                          }
+                      });
+                  }
+              });
+          });
+      });
   }
 
 }
