@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { EMPTY, Observable, forkJoin, from, map, of } from 'rxjs';
+import { EMPTY, Observable, catchError, forkJoin, from, map, of } from 'rxjs';
 import { Degree, Group, Schedule, Subject } from '../../../interfaces';
 import { CreateGroupService } from '../../popups/create-group/create-group-service.service';
 import { UserService } from '../../user.service';
@@ -227,6 +227,22 @@ export class GroupsComponent implements OnInit{
     }
   }
 
+  saveSchedule(rowIndex: number, dayIndex: number) {
+    const schedule = this.formatObject(this.scheduleResult[rowIndex]).find(schedule =>
+      schedule.day === this.getDayName(dayIndex)
+    );
+    if (schedule) {
+      const hallName = schedule.hall;
+      this.putSchedule(schedule).subscribe(
+        (response: boolean) => {
+          if (response) {
+            this.scheduleResult[rowIndex].halls[dayIndex] = hallName;
+          }
+        }
+      );
+    }
+  }
+
   updateGroup() {
     if (this.groupSelect && this.checkIfChanges() && this.subjectSelect && this.degreeSelect && this.degreeSelect.id && this.subjectSelect.id) {
 
@@ -435,8 +451,11 @@ export class GroupsComponent implements OnInit{
       this.updateTime(index);
     }
 
-    
+  }
 
+  onHallChange(event: any, rowIndex: number, dayIndex: number) {
+    this.scheduleResult[rowIndex].halls[dayIndex] = event;
+    this.checkIfChanges();
   }
 
   removeOverlappingSchedules(originalIndex: number, newStart: Date, newEnd: Date) {
@@ -636,6 +655,23 @@ export class GroupsComponent implements OnInit{
     } else {
         return { result: schedule, details: "Successfully validated horarios." };
     }
+  }
+
+  areSchedulesHallsEqual(currentSchedules: ScheduleResult[], originalSchedules: Schedule[]): boolean {
+    if (currentSchedules.length !== originalSchedules.length) {
+      return false;
+    }
+
+    for (let i = 0; i < currentSchedules.length; i++) {
+      const current = currentSchedules[i];
+      const original = originalSchedules[i];
+
+      if (current.halls.some((hall, index) => hall !== original.hall)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   private formatObject(scheduleResult: ScheduleResult): Schedule[] {

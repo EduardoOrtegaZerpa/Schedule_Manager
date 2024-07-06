@@ -88,3 +88,25 @@ table th {
 .hall label {
     font-size: medium;
 }
+
+.hall button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+  
+.hall button:hover {
+    background-color: #45a049;
+}
+  
+.hall button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed; 
+}
+  
+.fas {
+    margin-right: 5px;
+}
