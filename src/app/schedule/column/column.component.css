@@ -1,0 +1,62 @@
+.column-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    background-color: #886F68;
+}
+
+.column-header-day {
+    width: -webkit-fill-available;
+    padding: 20px;
+    height: 20px;
+    text-align: center;
+    font-weight: 600;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.schedule-items-parent{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.schedule-items-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #f3f3f3;
+    width: -webkit-fill-available;
+    border-top: 1px solid lightslategrey;
+}
+
+.schedule-info-header h3 {
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+
+.schedule-info-body {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--mainColor);
+    color: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+.schedule-items-container:hover .schedule-info-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  

@@ -1,0 +1,30 @@
+.schedules-calendar {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.schedules-column {
+    flex: 1;
+}
+
+.header-cell {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 700;
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+
+.hora {
+    display: flex;
+    min-height: 40px;
+    border-top: 1px solid lightslategrey;
+    align-items: center;
+    justify-content: center;
+}
+  

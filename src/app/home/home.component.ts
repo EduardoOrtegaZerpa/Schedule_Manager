@@ -4,12 +4,14 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../user.service';
 import { EMPTY, forkJoin } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { ScheduleComponent } from '../schedule/schedule.component';
+import { SchedulesInfo } from '../schedule/schedule.component';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ScheduleComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -22,6 +24,7 @@ export class HomeComponent {
   selectedYears: { [degreeId: number]: number[] } = {};
   selectedSubjects: Subject[] = [];
   filterTerm: string = '';
+  selectedSemester: number = 1;
 
 
   constructor(private userService: UserService) {
@@ -88,6 +91,13 @@ export class HomeComponent {
     } else {
       this.selectedSubjects.push(subject);
     }
+  }
+
+  switchSemester(semester: number) {
+    if (this.selectedSemester === semester) {
+      return;
+    }
+    this.selectedSemester = semester;
   }
 
   resetSubjects() {

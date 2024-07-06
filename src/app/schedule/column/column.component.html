@@ -1,0 +1,22 @@
+<div class="column-container">
+    <div class="column-header-day">{{ days[day] }}</div>
+    <div class="schedule-items-parent">
+        <div class="schedule-items-container" 
+        *ngFor="let item of items; let i = index"
+        [style.top.%]="item.getHeight()">
+        
+            <div class="schedule-info-header">
+                <h3>{{ item.subject.acronomy }}</h3>
+                <h3>{{item.hall}}</h3>
+            </div>
+
+            <div class="schedule-info-body">
+                <div class="schedule-info-body-cell">{{ item.subject.name }}</div>
+                <div class="schedule-info-body-cell">Start date: {{ item.startTime | date:'HH:mm' }}</div>
+                <div class="schedule-info-body-cell">End date: {{ item.endTime | date:'HH:mm' }}</div>
+            </div>
+      </div>
+    </div>
+  </div>
+  
+  

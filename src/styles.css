@@ -86,7 +86,6 @@ input, button {
     border: none;
 }
 
-html, body, main, #wrapper-container { height: 100%; }
 main { margin: 0; background: #f0f0f0;}
 
 #wrapper-container {

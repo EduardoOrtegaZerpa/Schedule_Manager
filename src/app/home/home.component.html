@@ -39,12 +39,12 @@
 
     <div class="schedule-container">
         <div class="schedule-buttons">
-            <button>1º Semester</button>
-            <button>2º Semester</button>
+            <button [ngClass]="{'active': selectedSemester === 1}" (click)="switchSemester(1)">1º Semester</button>
+            <button [ngClass]="{'active': selectedSemester === 2}" (click)="switchSemester(2)">2º Semester</button>
         </div>
 
         <div class="schedule">
-
+            <app-schedule></app-schedule>
         </div>
     </div>
 

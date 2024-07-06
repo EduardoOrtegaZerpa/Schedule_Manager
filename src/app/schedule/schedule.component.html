@@ -1,0 +1,19 @@
+<div class="schedules-calendar">
+
+    <div class="schedules-column hours-column">
+      <div class="header-cell" style="visibility: hidden;"></div>
+      <ng-container *ngFor="let hour of hours; let i = index">
+        <div class="week-hour-row">
+          <div class="header-cell hora">{{ hour }}</div>
+        </div>
+      </ng-container>
+    </div>
+
+
+    <ng-container *ngFor="let day of weekDays; let i = index">
+      <div class="schedules-column">
+        <app-column [day]="i"></app-column>
+      </div>
+    </ng-container>
+
+</div>
