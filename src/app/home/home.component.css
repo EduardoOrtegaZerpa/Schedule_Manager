@@ -1,0 +1,190 @@
+:host{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+button{
+    background-color: #886F68;
+    color: white;
+    border: none;
+    padding: 15px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    min-width: 150px;
+}
+
+h2 {
+    color: #3D2C2E;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: larger;
+    font-weight: bold;
+}
+
+h4 {
+    font-size: large;
+    font-weight: bold;
+}
+
+h5 {
+    font-size: medium;
+    font-weight: bold;
+}
+
+.active {
+    background-color: #3D2C2E;
+}
+
+.non-selected {
+    color: white;
+    background-color: rgb(250, 50, 50);
+    padding: 10px;
+}
+
+.selected {
+    color: white;
+    background-color: rgb(50, 150, 50);
+    padding: 10px;
+}
+
+.home {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding: 40px 40px;
+    gap: 40px;
+}
+
+.side-container{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    flex: 1;
+}
+
+.selectors-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.selectors-container input{
+    padding: 15px;
+    border-radius: 8px;
+    border: 0px;
+    color: white;
+    background-color: #886F68;
+}
+
+.selectors-container button {
+    width: 50%;
+}
+
+.selectors-container input::placeholder{
+    color: white;
+}
+
+.selectors {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: #886F68;
+    color: white;
+}
+
+.degrees {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.degree {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.years {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-left: 10px;
+}
+
+.year {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.subjects {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 20px;
+}
+
+.subject {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    width: fit-content;
+}
+
+
+.schedule-container{
+    display: flex;
+    flex-direction: column;
+    flex: 4;
+}
+
+.schedule-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.schedule{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+    background-color: #886F68;
+}
+
+.side-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.side-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #886F68;
+    padding: 20px;
+}
+
+.side-stats p {
+    color: white;
+    font-size: large;
+}
+
+.side-stats h2 {
+    color: white;
+    text-align: center;
+}

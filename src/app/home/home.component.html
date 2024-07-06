@@ -1,5 +1,70 @@
 <div class="home">
-    <div class="selector-container">
-        
+
+    <div class="side-container">
+        <div class="side-info">
+            <h2>DEGREES & SUBJECTS</h2>
+            <p>Remember that you can select subjects from both the first semester and the second semester.</p>
+        </div>
+
+        <div class="selectors-container">
+            <input type="text" placeholder="Filtrar por asignaturas..." [(ngModel)]="filterTerm" (input)="applyFilter()">
+            <div class="selectors">
+                <h3>DEGREES</h3>
+                <div class="degrees" *ngFor="let degree of degrees">
+                    <div class="degree" (click)="degree.id ? toggleDegree(degree.id) : null">
+                        <h4>{{ degree.name }}</h4>
+                    </div>
+                    <div *ngIf="selectedDegree === degree.id">
+                        <div class="years" *ngFor="let year of getYears(degree.id)">
+                            <div class="year" (click)="toggleYear(degree.id, year)">
+                                <h5>Año {{ year }}</h5>
+                            </div>
+                            <div *ngIf="isYearSelected(degree.id, year)">
+                                <ul class="subjects">
+                                    <li class="subject"
+                                    *ngFor="let subject of getSubjects(degree.id, year)"
+                                    [ngClass]="getSubjectClass(subject)"
+                                    (click)="toggleSubject(subject)">
+                                    {{ subject.name }}
+                                </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button (click)="resetSubjects()">Reset</button>
+        </div>
     </div>
+
+    <div class="schedule-container">
+        <div class="schedule-buttons">
+            <button>1º Semester</button>
+            <button>2º Semester</button>
+        </div>
+
+        <div class="schedule">
+
+        </div>
+    </div>
+
+    <div class="side-container">
+        <div class="side-info">
+            <h2>GENERATE A NEW RESULT</h2>
+            <button>New Result</button>
+        </div>
+
+        <div class="side-info">
+            <h2>GENERATE LESS OPTIMAL RESULTS</h2>
+            <p>If you do not get the expected result with the previous option, try to obtain a less optimal but correct result.</p>
+            <button>Another Result</button>
+        </div>
+
+        <div class="side-stats">
+            <h2>STATISTICS</h2>
+            <p>Free days: </p>
+            <p>Weekly occupied hours: </p>
+        </div>
+    </div>
+
 </div>

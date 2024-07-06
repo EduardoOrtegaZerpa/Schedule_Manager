@@ -43,11 +43,8 @@
             <div class="input">
               <label for="subjectSemester">SEMESTER</label>
               <input id="subjectSemester" type="number" formControlName="subjectSemester" placeholder="Semester of the subject">
-              <div *ngIf="subjectForm.get('subjectSemester')?.hasError('required') && (subjectForm.get('subjectSemester')?.dirty || subjectForm.get('subjectSemester')?.touched)" class="error">
+              <div *ngIf="subjectForm.controls['subjectSemester'].invalid && (subjectForm.controls['subjectSemester'].dirty || subjectForm.controls['subjectSemester'].touched)" class="error">
                 Semester is required
-              </div>
-              <div *ngIf="subjectForm.get('subjectSemester')?.hasError('min')" class="error">
-                Semester must be greater than or equal to 1
               </div>
             </div>
         </form>

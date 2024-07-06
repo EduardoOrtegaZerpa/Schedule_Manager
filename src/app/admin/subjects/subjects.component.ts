@@ -33,7 +33,11 @@ export class SubjectsComponent implements OnInit{
       subjectName: ['', Validators.required],
       subjectYear: ['', Validators.required],
       subjectAcronym: ['', Validators.required],
-      subjectSemester: ['', [Validators.required, Validators.min(1), Validators.max(2)]]
+      subjectSemester: ['', {
+        validators: [Validators.required, Validators.min(1), Validators.max(2)],
+        asyncValidators: [],
+        updateOn: 'blur'
+      }]
     });
   }
 
