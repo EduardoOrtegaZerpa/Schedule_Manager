@@ -215,7 +215,7 @@ h5 {
     
 }
 
-@media screen and (max-width: 5500px){
+@media screen and (max-width: 500px){
     .schedule-buttons{
         flex-direction: column;
         gap: 20px;
