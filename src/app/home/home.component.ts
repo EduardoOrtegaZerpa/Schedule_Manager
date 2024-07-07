@@ -183,14 +183,14 @@ export class HomeComponent implements OnInit{
     });
   }
 
-  getFreeHours() {
+  getOccupiedHours() {
     if (!this.latestResponse) {
       return 0;
     }
-    return (this.weekHours - this.latestResponse.hours) > 0 ? this.weekHours - this.latestResponse.hours : 0;
+    return this.weekHours - this.latestResponse.hours === 168 ? 0 : this.weekHours - this.latestResponse.hours;
   }
 
-  getOccupiedHours() {
+  getFreeHours() {
     if (!this.latestResponse) {
       return 0;
     }
@@ -204,13 +204,11 @@ export class HomeComponent implements OnInit{
     return this.latestResponse.days;
   }
 
-  generateLessOptimalSchedule(lessFreeDays: boolean) {
+  generateLessOptimalSchedule() {
     const subjectsId: number[] = this.selectedSubjects.map(subject => subject.id!);
-    let freeDays = lessFreeDays ? this.getFreeDays() - 1 : this.getFreeDays();
-    freeDays = freeDays < 0 ? 0 : freeDays;
-    let occupiedHours = lessFreeDays ? this.getOccupiedHours() : this.getOccupiedHours() - 1;
-    occupiedHours = occupiedHours < 0 ? 0 : occupiedHours;
-    this.userService.generateLessOptimalSchedules(subjectsId, freeDays, occupiedHours).subscribe({
+    const freeDays = this.getFreeDays();
+    const freeHours = this.getFreeHours();
+    this.userService.generateLessOptimalSchedules(subjectsId, freeDays, freeHours).subscribe({
       next: (algorithmResponse: AlgorithmResponse) => {
         this.showSchedule(algorithmResponse);
         this.latestResponse = algorithmResponse;

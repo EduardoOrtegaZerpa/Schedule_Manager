@@ -219,7 +219,7 @@ h5 {
     .schedule-buttons{
         flex-direction: column;
         gap: 20px;
-        align-self: flex-end;
+        align-self: center;
     }
 
     .schedule-buttons button {

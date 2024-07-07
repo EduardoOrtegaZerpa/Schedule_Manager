@@ -67,21 +67,16 @@
                 In that case, try selecting different subjects or use the 'New Result' button.
             </p>
             <button
-            (click)="generateLessOptimalSchedule(true)"
+            (click)="generateLessOptimalSchedule()"
             [disabled]="!schedulesInfo.length"
             [ngClass]="{'disabled': !schedulesInfo.length}"
-            >Less Days</button>
-            <button
-            (click)="generateLessOptimalSchedule(false)"
-            [disabled]="!schedulesInfo.length"
-            [ngClass]="{'disabled': !schedulesInfo.length}"
-            >Less Hours</button>
+            >Less Optimal Result</button>
         </div>
 
         <div class="side-stats">
             <h2>STATISTICS</h2>
             <p>Free days: {{getFreeDays()}}</p>
-            <p>Weekly occupied hours: {{getFreeHours()}}</p>
+            <p>Weekly occupied hours: {{getOccupiedHours()}}</p>
         </div>
 
         <div class="side-stats">
