@@ -24,3 +24,14 @@
     flex: 4;
     background-color: #3D2C2E;
 }
+
+@media (max-width: 1700px){
+    .admin {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .options{
+        gap: 20px;
+    } 
+}

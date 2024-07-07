@@ -110,3 +110,79 @@ table th {
 .fas {
     margin-right: 5px;
 }
+
+.day.abbr {
+    display: none;
+}
+
+@media (max-width: 2150px) {
+    .halls-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: 1600px) {
+    .halls-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 1100px) {
+    .halls-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .time-interval-input input {
+        padding: 0px;
+    }
+}
+
+@media (max-width: 1000px){
+    .day.abbr {
+        display: table-cell;
+    }
+
+    .day.full {
+        display: none;
+    }
+}
+
+@media (max-width: 650px) {
+    .schedule {
+        gap: 10px;
+    }
+
+    table th {
+        font-size: medium;
+    }
+
+    table td {
+        font-size: small;
+    }
+
+    .time-interval-input {
+        gap: 4px;
+    }
+
+    .hall button {
+        padding: 5px 10px;
+    }
+
+    .table-container {
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .table-container table {
+        width: 100%;
+        border-collapse: collapse;
+        -webkit-overflow-scrolling: touch;
+        overflow-x: auto;
+    }
+
+    .add-row {
+        justify-content: flex-start;
+    }
+
+    
+}

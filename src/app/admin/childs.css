@@ -12,6 +12,7 @@ label {
     font-size: x-large;
     font-weight: bold;
     color: white;
+    text-align: center;
 }
 
 input {
@@ -44,6 +45,7 @@ input {
     display: flex;
     gap: 20px;
     align-items: center;
+    flex: 1;
 }
 
 .select label {
@@ -55,8 +57,7 @@ input {
 .select select {
     font-size: small;
     padding: 15px;
-    min-width: 200px;
-    width: fit-content;
+    flex: 1;
 }
 
 .inputs {
@@ -76,6 +77,7 @@ input {
     display: flex;
     gap: 20px;
     align-self: flex-end;
+    margin-top: 40px;
 }
 
 .buttons button {
@@ -104,4 +106,89 @@ input {
     background-color: #886F68 !important;
     color: #8C8C8C !important;
     cursor: not-allowed !important;
+}
+
+@media screen and (max-width: 1400px) {
+    .select label {
+        font-size: large;
+    }
+
+    .selects{
+        justify-content: center;
+    }
+
+    .inputs {
+        gap: 20px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+
+    .selects {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .inputs {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .selects {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-container {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 650px) {
+    .buttons button {
+        padding: 10px 15px;
+        font-size: medium;
+    }
+
+    label {
+        font-size: large;
+    }
+}
+
+@media (max-width: 600px) {
+    input {
+        padding: 10px;
+        width: 20px;
+    }
+}
+
+@media (max-width: 500px) {
+    .buttons button {
+        padding: 10px 10px;
+        font-size: small;
+    }
+
+    .select label, label {
+        font-size: small;
+    }
+
+    .hall {
+        flex-direction: column;
+    }
+
+    .hall input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 400px) {
+    .buttons button {
+        padding: 5px 5px;
+        font-size: x-small;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
 }
