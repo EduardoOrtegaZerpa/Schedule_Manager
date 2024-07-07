@@ -194,3 +194,35 @@ h5 {
     color: white;
     text-align: center;
 }
+
+@media screen and (max-width: 1200px) {
+    .home {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .side-container{
+        gap: 20px;
+    }
+
+    .schedule-buttons{
+        justify-content: center;
+    }
+
+    .selectors-container button {
+        width: 100%;
+    }
+    
+}
+
+@media screen and (max-width: 5500px){
+    .schedule-buttons{
+        flex-direction: column;
+        gap: 20px;
+        align-self: flex-end;
+    }
+
+    .schedule-buttons button {
+        width: 50%;
+    }
+}

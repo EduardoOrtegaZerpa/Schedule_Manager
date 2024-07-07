@@ -26,8 +26,7 @@ export class HomeComponent implements OnInit{
   filterTerm: string = '';
   selectedSemester: number = 1;
   schedulesInfo: SchedulesInfo[] = [];
-  daysFree: number = 0;
-  hoursFree: number = 0;
+  latestResponse: AlgorithmResponse | null = null;
 
   private weekHours: number = 24 * 7;
 
@@ -112,8 +111,7 @@ export class HomeComponent implements OnInit{
 
   reset() {
     this.selectedSubjects = [];
-    this.daysFree = 0;
-    this.hoursFree = 0;
+    this.latestResponse = null;
     this.schedulesInfo = [];
     this.scheduleService.setScheduleInfo([]);
   }
@@ -179,8 +177,43 @@ export class HomeComponent implements OnInit{
     this.userService.generateNoConflictSchedules(subjectsId).subscribe({
       next: (algorithmResponse: AlgorithmResponse) => {
         this.showSchedule(algorithmResponse);
-        this.daysFree = algorithmResponse.days;
-        this.hoursFree = (this.weekHours - algorithmResponse.hours) > 0 ? this.weekHours - algorithmResponse.hours : 0;
+        this.latestResponse = algorithmResponse;
+      },
+      error: (error) => this.handleScheduleError(error)
+    });
+  }
+
+  getFreeHours() {
+    if (!this.latestResponse) {
+      return 0;
+    }
+    return (this.weekHours - this.latestResponse.hours) > 0 ? this.weekHours - this.latestResponse.hours : 0;
+  }
+
+  getOccupiedHours() {
+    if (!this.latestResponse) {
+      return 0;
+    }
+    return this.latestResponse.hours;
+  }
+
+  getFreeDays() {
+    if (!this.latestResponse) {
+      return 0;
+    }
+    return this.latestResponse.days;
+  }
+
+  generateLessOptimalSchedule(lessFreeDays: boolean) {
+    const subjectsId: number[] = this.selectedSubjects.map(subject => subject.id!);
+    let freeDays = lessFreeDays ? this.getFreeDays() - 1 : this.getFreeDays();
+    freeDays = freeDays < 0 ? 0 : freeDays;
+    let occupiedHours = lessFreeDays ? this.getOccupiedHours() : this.getOccupiedHours() - 1;
+    occupiedHours = occupiedHours < 0 ? 0 : occupiedHours;
+    this.userService.generateLessOptimalSchedules(subjectsId, freeDays, occupiedHours).subscribe({
+      next: (algorithmResponse: AlgorithmResponse) => {
+        this.showSchedule(algorithmResponse);
+        this.latestResponse = algorithmResponse;
       },
       error: (error) => this.handleScheduleError(error)
     });
@@ -195,4 +228,22 @@ export class HomeComponent implements OnInit{
       error: (error) => this.handleConversionError(error)
     });
   }
+
+  showScheduleInfo() {
+    const filteredScheduleInfo = this.filterScheduleInfo();
+    const uniqueScheduleInfo: SchedulesInfo[] = [];
+    const seenSubjects = new Set();
+
+    filteredScheduleInfo.forEach(scheduleInfo => {
+        if (scheduleInfo.subject.name && !seenSubjects.has(scheduleInfo.subject.name)) {
+            seenSubjects.add(scheduleInfo.subject.name);
+            uniqueScheduleInfo.push(scheduleInfo);
+        }
+    });
+
+    return uniqueScheduleInfo;
 }
+
+}
+
+

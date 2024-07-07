@@ -366,6 +366,7 @@ export class GroupsComponent implements OnInit{
         if (response) {
           return response;
         } else {
+          window.location.reload();
           return false;
         }
     }));
@@ -381,6 +382,7 @@ export class GroupsComponent implements OnInit{
         if (response) {
           return true;
         } else {
+          window.location.reload();
           return false;
         }
     }));
@@ -398,6 +400,7 @@ export class GroupsComponent implements OnInit{
         if (response) {
           return true;
         } else {
+          window.location.reload();
           return false;
         }
     }));

@@ -61,21 +61,32 @@
         <div class="side-info">
             <h2>GENERATE LESS OPTIMAL RESULTS</h2>
             <p>If you do not get the expected result with the previous option, try to obtain a less optimal but correct result.</p>
+            <p>You can decide if you want a new schedule with fewer free hours or fewer free days. Consider using hours as a recommendation.</p>
+            <p>Every time you use one of these buttons, take into account that you may receive worse results. 
+                Because of this, it is possible that you will not get any results. 
+                In that case, try selecting different subjects or use the 'New Result' button.
+            </p>
             <button
+            (click)="generateLessOptimalSchedule(true)"
             [disabled]="!schedulesInfo.length"
             [ngClass]="{'disabled': !schedulesInfo.length}"
-            >Another Result</button>
+            >Less Days</button>
+            <button
+            (click)="generateLessOptimalSchedule(false)"
+            [disabled]="!schedulesInfo.length"
+            [ngClass]="{'disabled': !schedulesInfo.length}"
+            >Less Hours</button>
         </div>
 
         <div class="side-stats">
             <h2>STATISTICS</h2>
-            <p>Free days: {{daysFree}}</p>
-            <p>Weekly occupied hours: {{hoursFree}}</p>
+            <p>Free days: {{getFreeDays()}}</p>
+            <p>Weekly occupied hours: {{getFreeHours()}}</p>
         </div>
 
         <div class="side-stats">
             <h2>INFORMATION</h2>
-            <div *ngFor="let item of filterScheduleInfo()">
+            <div *ngFor="let item of showScheduleInfo()">
                 <p>Asignatura: {{ item.subject.name }}</p>
                 <p>Grupo: {{ item.group.name }}</p>
             </div>

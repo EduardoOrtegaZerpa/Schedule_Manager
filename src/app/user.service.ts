@@ -146,9 +146,25 @@ export class UserService {
     );
   }
 
+  generateLessOptimalSchedules(subjectIds: number[], days: number, hours: number): Observable<AlgorithmResponse> {
+    return this.http.post(`${this.APIURL}/generate/schedule/${days}/${hours}`, { subjectIds }).pipe(
+      map((response: any) => {
+        return response.response as AlgorithmResponse;
+      }),
+      catchError((error) => {
+        throwError(() => error);
+        return [];
+      })
+    );
+  }
+
   convertResponseToScheduleInfo(response: AlgorithmResponse): Observable<SchedulesInfo[]> {
       return new Observable<SchedulesInfo[]>((observer) => {
           const schedulesInfo: SchedulesInfo[] = [];
+          if (response.subjects.length === 0) {
+              observer.next(schedulesInfo);
+              observer.complete();
+          }
           response.subjects.map((subject) => {
               this.getGroupById(subject.group).subscribe({
                   next: (group: Group) => {
