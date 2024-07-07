@@ -12,7 +12,7 @@
 
     <ng-container *ngFor="let day of weekDays; let i = index">
       <div class="schedules-column">
-        <app-column [day]="i"></app-column>
+        <app-column [day]="i" [schedulesInfoInput]="schedulesInfo"></app-column>
       </div>
     </ng-container>
 

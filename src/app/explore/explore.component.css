@@ -1,0 +1,51 @@
+:host{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.explore {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 40px 40px;
+    gap: 40px;
+}
+
+.selectors {
+    display: flex;
+    gap: 40px;
+    padding: 20px;
+    align-self: flex-end;
+}
+
+.selector {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.selector select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    min-width: 200px;
+}
+
+.selector label {
+    font-size: larger;
+    color: #3D2C2E;
+    font-weight: bold;
+}
+
+.schedule h1 {
+    font-size: 2em;
+    color: #3D2C2E;
+    font-weight: bold;
+}
+
+.schedule {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

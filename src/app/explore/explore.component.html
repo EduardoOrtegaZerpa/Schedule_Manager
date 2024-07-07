@@ -1,0 +1,30 @@
+<div class="explore">
+    <div class="selectors">
+        <div class="selector">
+            <label for="degreeSelect">Degree</label>
+            <select id="degreeSelect" [(ngModel)]="degreeSelect" (change)="onDegreeChange(degreeSelect)">
+                <option *ngFor="let degree of degrees" [ngValue]="degree">{{degree.name}}</option>
+            </select>
+        </div>
+        <div class="selector">
+            <label for="yearSelect">Year</label>
+            <select id="yearSelect" [(ngModel)]="yearSelect" (change)="onYearChange(yearSelect)">
+                <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
+            </select>
+        </div>
+        <div class="selector"> 
+            <label for="semesterSelect">Semester</label>
+            <select id="semesterSelect" [(ngModel)]="semesterSelect" (change)="onSemesterChange(semesterSelect)">
+                <option *ngFor="let semester of semesters" [ngValue]="semester">{{semester}}</option>
+            </select>
+        </div>
+    </div>
+
+    <ng-container *ngFor="let group of shownGroups()">
+        <div class="schedule" *ngIf="filteredSchedulesInfo(group).length > 0">
+            <h1>Group: {{group.name}}</h1>
+            <app-schedule [schedulesInfo]="filteredSchedulesInfo(group)"></app-schedule>
+        </div>
+    </ng-container>    
+    
+</div>

@@ -34,16 +34,22 @@ export class ColumnComponent implements OnInit, OnChanges{
   @Input() day: number = 0;
   items: Item[] = [];
   schedulesInfo: SchedulesInfo[] = [];
+  @Input() schedulesInfoInput: SchedulesInfo[] | undefined;
 
   constructor (private scheduleService: ScheduleService) { }
   
   ngOnInit(): void {
-    this.scheduleService.scheduleInfo$.subscribe({
-      next: (schedulesInfo) => {
-        this.schedulesInfo = schedulesInfo;
-        this.populateItems();
-      }
-    });
+    if (this.schedulesInfoInput) {
+      this.schedulesInfo = this.schedulesInfoInput;
+      this.populateItems();
+    } else {
+      this.scheduleService.scheduleInfo$.subscribe({
+        next: (schedulesInfo) => {
+          this.schedulesInfo = schedulesInfo;
+          this.populateItems();
+        }
+      });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {

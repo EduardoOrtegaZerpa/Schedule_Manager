@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Degree, Subject, SchedulesInfo, AlgorithmResponse } from '../../interfaces';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../user.service';
@@ -15,7 +15,7 @@ import { ScheduleService } from '../schedule/schedule.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
 
   degrees: Degree[] = [];
   subjects: Subject[] = [];
@@ -34,6 +34,10 @@ export class HomeComponent {
 
   constructor(private userService: UserService, private scheduleService: ScheduleService) {
     this.loadDegreesWithSubjects();
+  }
+
+  ngOnInit(): void {
+    this.scheduleService.setScheduleInfo([]);
   }
 
   loadDegreesWithSubjects() {

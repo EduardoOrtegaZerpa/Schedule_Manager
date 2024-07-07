@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, Input, OnInit } from '@angular/core';
 import { ColumnComponent } from './column/column.component';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../user.service';
+import { SchedulesInfo } from '../../interfaces';
 
 @Component({
   selector: 'app-schedule',
@@ -20,6 +21,7 @@ export class ScheduleComponent implements OnInit{
 
   hours: string[] = [];
   weekDays: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  @Input() schedulesInfo: SchedulesInfo[] | undefined;
 
   ngOnInit(): void {
     this.hours = this.generateHours();
