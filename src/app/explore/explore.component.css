@@ -77,4 +77,14 @@
         padding: 20px;
         gap: 20px;
     }
+
+    .schedule h1 {
+        font-size: 1.5em;
+    }
+}
+
+@media screen and (max-width: 400px){
+    .schedule h1 {
+        font-size: 1.2em;
+    }
 }

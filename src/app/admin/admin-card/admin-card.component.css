@@ -18,3 +18,21 @@
   background-color: #3D2C2E;
   border-color: white;
 }
+
+@media screen and (max-width: 768px) {
+    .admin-card {
+        padding: 10px;
+    }
+    .card-title {
+        font-size: large;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .admin-card {
+        padding: 5px;
+    }
+    .card-title {
+        font-size: medium;
+    }
+}
