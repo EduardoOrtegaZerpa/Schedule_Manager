@@ -1,8 +1,9 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, HostListener, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Group, Schedule, Subject, SchedulesInfo } from '../../../interfaces';
 import { ScheduleItem } from './schedule-item';
 import { CommonModule } from '@angular/common';
 import { ScheduleService } from '../schedule.service';
+import { BehaviorSubject } from 'rxjs';
 
 
 export interface Item{
@@ -36,7 +37,25 @@ export class ColumnComponent implements OnInit, OnChanges{
   schedulesInfo: SchedulesInfo[] = [];
   @Input() schedulesInfoInput: SchedulesInfo[] | undefined;
 
-  constructor (private scheduleService: ScheduleService) { }
+  isMobile: boolean;
+
+  constructor (private scheduleService: ScheduleService) {
+    this.isMobile = window.innerWidth <= 768;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkScreenSize();
+  }
+  
+  private checkScreenSize() {
+    this.isMobile = window.innerWidth <= 768;
+  }
+
+  getDayDisplay(day: number): string {
+    const dayString = this.days[day];
+    return this.isMobile ? dayString.slice(0, 2) : dayString;
+  }
   
   ngOnInit(): void {
     if (this.schedulesInfoInput) {

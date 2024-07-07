@@ -1,5 +1,5 @@
 <div class="column-container">
-    <div class="column-header-day">{{ days[day] }}</div>
+    <div class="column-header-day">{{ getDayDisplay(day) }}</div>
     <div class="schedule-items-parent">
         <div class="schedule-items-container" 
         *ngFor="let item of items; let i = index"
