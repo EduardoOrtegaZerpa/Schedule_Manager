@@ -25,8 +25,10 @@ export class HomeComponent implements OnInit{
   selectedSubjects: Subject[] = [];
   filterTerm: string = '';
   selectedSemester: number = 1;
-  schedulesInfo: SchedulesInfo[] = [];
-  latestResponse: AlgorithmResponse | null = null;
+  firstSemesterSchedulesInfo: SchedulesInfo[] = [];
+  secondSemesterSchedulesInfo: SchedulesInfo[] = [];
+  firstSemesterResponse: AlgorithmResponse | null = null;
+  secondSemesterResponse: AlgorithmResponse | null = null;
 
   private weekHours: number = 24 * 7;
 
@@ -111,8 +113,10 @@ export class HomeComponent implements OnInit{
 
   reset() {
     this.selectedSubjects = [];
-    this.latestResponse = null;
-    this.schedulesInfo = [];
+    this.firstSemesterResponse = null;
+    this.secondSemesterResponse = null
+    this.firstSemesterSchedulesInfo = [];
+    this.secondSemesterSchedulesInfo = [];
     this.scheduleService.setScheduleInfo([]);
   }
 
@@ -168,66 +172,110 @@ export class HomeComponent implements OnInit{
   }
 
   filterScheduleInfo() {
-    return this.schedulesInfo.filter(scheduleInfo => scheduleInfo.subject.semester === this.selectedSemester);
+    if (this.selectedSemester === 1) {
+      return this.firstSemesterSchedulesInfo;
+    } else {
+      return this.secondSemesterSchedulesInfo;
+    } 
+  }
+
+  generateScheduleBySemester(semester: number) {
+    const subjects = this.selectedSubjects.filter(subject => subject.semester === semester);
+    const subjectsId: number[] = subjects.map(subject => subject.id!);
+    this.userService.generateNoConflictSchedules(subjectsId).subscribe({
+      next: (algorithmResponse: AlgorithmResponse) => {
+        this.showSchedule(algorithmResponse, semester);
+        if (semester === 1) {
+          this.firstSemesterResponse = algorithmResponse;
+        } else {
+          this.secondSemesterResponse = algorithmResponse;
+        }
+      },
+      error: (error) => this.handleScheduleError(error)
+    });
   }
 
   generateSchedule() {
-
-    const subjectsId: number[] = this.selectedSubjects.map(subject => subject.id!);
-    this.userService.generateNoConflictSchedules(subjectsId).subscribe({
-      next: (algorithmResponse: AlgorithmResponse) => {
-        this.showSchedule(algorithmResponse);
-        this.latestResponse = algorithmResponse;
-      },
-      error: (error) => this.handleScheduleError(error)
-    });
+    this.generateScheduleBySemester(1);
+    this.generateScheduleBySemester(2);
   }
 
-  getOccupiedHours() {
-    if (!this.latestResponse) {
+  getOccupiedHours(semester: number) {
+    const response = semester === 1 ? this.firstSemesterResponse : this.secondSemesterResponse;
+
+    if (!response ) {
       return 0;
     }
-    return this.weekHours - this.latestResponse.hours === 168 ? 0 : this.weekHours - this.latestResponse.hours;
+
+    return this.weekHours - response.hours === 168 ? 0 : this.weekHours - response.hours;
   }
 
-  getFreeHours() {
-    if (!this.latestResponse) {
+  getFreeHours(semester: number) {
+    const response = semester === 1 ? this.firstSemesterResponse : this.secondSemesterResponse;
+
+    if (!response) {
       return 0;
     }
-    return this.latestResponse.hours;
+
+    return response.hours;
   }
 
-  getFreeDays() {
-    if (!this.latestResponse) {
+  getFreeDays(semester: number) {
+    const response = semester === 1 ? this.firstSemesterResponse : this.secondSemesterResponse;
+    if (!response) {
       return 0;
     }
-    return this.latestResponse.days;
+
+    return response.days;
   }
 
   generateLessOptimalSchedule() {
-    const subjectsId: number[] = this.selectedSubjects.map(subject => subject.id!);
-    const freeDays = this.getFreeDays();
-    const freeHours = this.getFreeHours();
+    this.generateLessOptimalScheduleBySemester(this.selectedSemester);
+  }
+
+  generateLessOptimalScheduleBySemester(semester: number) {
+    const scheduleInfo = this.filterScheduleInfo();
+    const subjects = scheduleInfo.map(schedule => schedule.subject);
+    const subjectsId: number[] = subjects.map(subject => subject.id!);
+    const freeDays = this.getFreeDays(semester);
+    const freeHours = this.getFreeHours(semester);
     this.userService.generateLessOptimalSchedules(subjectsId, freeDays, freeHours).subscribe({
       next: (algorithmResponse: AlgorithmResponse) => {
-        this.showSchedule(algorithmResponse);
-        this.latestResponse = algorithmResponse;
+        this.showSchedule(algorithmResponse, semester);
+        if (semester === 1) {
+          this.firstSemesterResponse = algorithmResponse;
+        } else {
+          this.secondSemesterResponse = algorithmResponse;
+        }
       },
       error: (error) => this.handleScheduleError(error)
     });
   }
 
-  showSchedule(algorithmResponse: AlgorithmResponse) {
+  showSchedule(algorithmResponse: AlgorithmResponse, semester: number) {
     
     if (algorithmResponse.subjects.length === 0) {
-        this.schedulesInfo = [];
-        this.scheduleService.setScheduleInfo([]);
+
+        if (semester === 1) {
+            this.firstSemesterSchedulesInfo = [];
+        } else {
+            this.secondSemesterSchedulesInfo = [];
+        }
+
+        if (this.selectedSemester === semester) {
+            this.scheduleService.setScheduleInfo([]);
+        }
+        
         return;
     }
     
     this.userService.convertResponseToScheduleInfo(algorithmResponse).subscribe({
         next: (schedulesInfo: SchedulesInfo[]) => {
-            this.schedulesInfo = schedulesInfo;
+            if (semester === 1) {
+                this.firstSemesterSchedulesInfo = schedulesInfo;
+            } else {
+                this.secondSemesterSchedulesInfo = schedulesInfo;
+            }
             this.scheduleService.setScheduleInfo(this.filterScheduleInfo());
         },
         error: (error) => this.handleConversionError(error)
