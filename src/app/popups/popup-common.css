@@ -109,3 +109,9 @@ form button {
     color: red;
     font-size: small;
 }
+
+@media screen and (max-width: 500px) {
+    .popup-container {
+        width: 80%;
+    }
+}

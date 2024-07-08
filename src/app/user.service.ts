@@ -11,7 +11,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  private APIURL = '/api';
+  private APIURL = 'http://eduortza.com:3001/api';
 
   getAllDegrees(): Observable<Degree[]> {
     return this.http.get(`${this.APIURL}/degrees`).pipe(

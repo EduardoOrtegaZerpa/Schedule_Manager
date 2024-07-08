@@ -10,7 +10,7 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  private APIURL = '/api';
+  private APIURL = 'http://eduortza.com:3001/api';
 
   addDegree(degree: Degree): Observable<Degree> {
     return this.http.post(`${this.APIURL}/degrees`, degree).pipe(
