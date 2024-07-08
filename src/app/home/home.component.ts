@@ -219,13 +219,14 @@ export class HomeComponent implements OnInit{
 
   showSchedule(algorithmResponse: AlgorithmResponse) {
     this.userService.convertResponseToScheduleInfo(algorithmResponse).subscribe({
-      next: (schedulesInfo: SchedulesInfo[]) => {
-        this.schedulesInfo = schedulesInfo;
-        this.scheduleService.setScheduleInfo(this.filterScheduleInfo());
-      },
-      error: (error) => this.handleConversionError(error)
+        next: (schedulesInfo: SchedulesInfo[]) => {
+            this.schedulesInfo = schedulesInfo;
+            this.scheduleService.setScheduleInfo(this.filterScheduleInfo());
+        },
+        error: (error) => this.handleConversionError(error)
     });
-  }
+}
+
 
   showScheduleInfo() {
     const filteredScheduleInfo = this.filterScheduleInfo();

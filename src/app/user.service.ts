@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, catchError, throwError, Observable } from 'rxjs';
+import { map, catchError, throwError, Observable, forkJoin, switchMap } from 'rxjs';
 import { Degree, Subject, Group, Schedule, AlgorithmResponse, SchedulesInfo } from '../interfaces';
 
 
@@ -159,41 +159,30 @@ export class UserService {
   }
 
   convertResponseToScheduleInfo(response: AlgorithmResponse): Observable<SchedulesInfo[]> {
-      return new Observable<SchedulesInfo[]>((observer) => {
-          const schedulesInfo: SchedulesInfo[] = [];
-          if (response.subjects.length === 0) {
-              observer.next(schedulesInfo);
-              observer.complete();
-          }
-          response.subjects.map((subject) => {
-              this.getGroupById(subject.group).subscribe({
-                  next: (group: Group) => {
-                      this.getSubjectById(subject.subject).subscribe({
-                          next: (subject: Subject) => {
-                              this.getSchedulesByGroupId(group.id!).subscribe({
-                                  next: (schedules: Schedule[]) => {
-                                      schedules.map((schedule) => {
-                                          schedulesInfo.push({
-                                              subject,
-                                              group,
-                                              schedule
-                                          });
-                                      });
-                                  },
-                                  complete: () => {
-                                      observer.next(schedulesInfo);
-                                      observer.complete();
-                                  },
-                                  error: (error) => {
-                                      observer.error(error);
-                                  }
-                              });
-                          }
-                      });
-                  }
-              });
-          });
-      });
-  }
+    const observables = response.subjects.map((subject) => {
+        return this.getGroupById(subject.group).pipe(
+            switchMap((group: Group) => 
+                this.getSubjectById(subject.subject).pipe(
+                    switchMap((subject: Subject) => 
+                        this.getSchedulesByGroupId(group.id!).pipe(
+                            map((schedules: Schedule[]) => 
+                                schedules.map((schedule) => ({
+                                    subject,
+                                    group,
+                                    schedule
+                                }))
+                            )
+                        )
+                    )
+                )
+            )
+        );
+    });
+
+    return forkJoin(observables).pipe(
+        map(results => results.flat())
+    );
+}
+
 
 }

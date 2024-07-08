@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "scheduleManager": {
+    "Scheduler": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/schedule-manager",
+            "outputPath": "dist/scheduler",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -62,10 +62,10 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "scheduleManager:build:production"
+              "buildTarget": "Scheduler:build:production"
             },
             "development": {
-              "buildTarget": "scheduleManager:build:development"
+              "buildTarget": "Scheduler:build:development"
             }
           },
           "defaultConfiguration": "development"
