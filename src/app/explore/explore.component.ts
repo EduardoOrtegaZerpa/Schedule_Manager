@@ -125,7 +125,6 @@ export class ExploreComponent implements OnInit{
     forkJoin(observables).subscribe({
       next: (result) => {
         result.forEach((groups, index) => {
-          console.log('Processing groups', groups, this.subjects[index]);
           this.processGroups(groups, this.subjects[index]);
         });
         
