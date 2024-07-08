@@ -358,6 +358,7 @@ export class GroupsComponent implements OnInit{
     const validated = this.validateSchedule(schedule);
 
     if (validated.result === null) {
+      console.error(validated.details);
       return of(false);
     }
 
@@ -645,8 +646,10 @@ export class GroupsComponent implements OnInit{
               dia &&
               row.hours.startTime !== null &&
               row.hours.endTime !== null &&
-              this.checkIfDatesOverlap(schedule.startTime, schedule.endTime)
+              this.checkOverlap(schedule.startTime, schedule.endTime, row.hours.startTime, row.hours.endTime)
             ) {
+              console.log(schedule.startTime, schedule.endTime, row.hours.startTime, row.hours.endTime)
+              console.log(schedule.day, this.getDayName(index));
               overlapDetected = true;
             }
           }
