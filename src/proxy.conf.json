@@ -1,6 +1,6 @@
 {
     "/api": {
-      "target": "http://eduortza.com:3001/api",
+      "target": "https://scheduler.eduortza.com:3001/api",
       "secure": false,
       "pathRewrite": {
               "^/api": ""

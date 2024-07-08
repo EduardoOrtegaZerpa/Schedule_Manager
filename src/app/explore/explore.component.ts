@@ -176,13 +176,16 @@ export class ExploreComponent implements OnInit{
       next: (result) => {
         result.forEach((schedules, index) => {
           schedules.forEach(schedule => {
-            const subject = subjects.find(subject => subject.id === this.groups[index].subject_id);
-            if (!subject) {
+            const groupId = schedule.group_id;
+            const group = this.groups.find(group => group.id === groupId);
+            const subject = this.subjects.find(subject => subject.id === group?.subject_id);
+
+            if (!subject || !group) {
               return;
             }
             this.schedulesInfo.push({
               subject: subject,
-              group: this.groups[index],
+              group: group,
               schedule
             });
           });
