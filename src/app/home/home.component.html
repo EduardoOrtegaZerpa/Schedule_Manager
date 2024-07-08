@@ -14,7 +14,7 @@
                     <div class="degree" (click)="degree.id ? toggleDegree(degree.id) : null">
                         <h4>{{ degree.name }}</h4>
                     </div>
-                    <div *ngIf="selectedDegree === degree.id">
+                    <div class="years" *ngIf="selectedDegree === degree.id">
                         <div class="years" *ngFor="let year of getYears(degree.id)">
                             <div class="year" (click)="toggleYear(degree.id, year)">
                                 <h5>Año {{ year }}</h5>

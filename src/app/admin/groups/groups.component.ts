@@ -482,10 +482,10 @@ export class GroupsComponent implements OnInit{
     return (
       (start && end && newStart && newEnd) &&
       (
-        (newStart >= start && newStart <= end) ||
-        (newEnd >= start && newEnd <= end) ||
-        (start >= newStart && start <= newEnd) ||
-        (end >= newStart && end <= newEnd)
+        (newStart > start && newStart < end) ||
+        (newEnd > start && newEnd < end) ||
+        (start > newStart && start < newEnd) ||
+        (end > newStart && end < newEnd)
       )
     );
   }
