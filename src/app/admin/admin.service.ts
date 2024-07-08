@@ -54,7 +54,6 @@ export class AdminService {
   }
 
   updateSubject(subject: Subject): Observable<Subject> {
-    console.log(subject);
     return this.http.put(`${this.APIURL}/subjects/` + subject.id, subject).pipe(
       map((response: any) => {
         return response.response as Subject;
