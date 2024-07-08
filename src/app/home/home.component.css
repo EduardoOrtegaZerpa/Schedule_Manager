@@ -26,13 +26,21 @@ h3 {
 }
 
 h4 {
+    display: flex;
     font-size: large;
     font-weight: bold;
+    gap: 15px;
 }
 
 h5 {
+    display: flex;
     font-size: medium;
     font-weight: bold;
+    gap: 15px;
+}
+
+p {
+    text-align: justify;
 }
 
 .active {
@@ -41,20 +49,19 @@ h5 {
 
 .non-selected {
     color: white;
-    background-color: rgb(250, 50, 50);
+    background-color: rgb(249, 97, 97);
     padding: 10px;
 }
 
 .selected {
     color: white;
-    background-color: rgb(50, 150, 50);
+    background-color: #80CA89;
     padding: 10px;
 }
 
 .disabled {
     color: white;
     background-color: rgb(150, 150, 150);
-    padding: 10px;
     cursor: not-allowed;
 }
 
@@ -102,6 +109,7 @@ h5 {
     padding: 20px;
     background-color: #886F68;
     color: white;
+    border-radius: 8px;
 }
 
 .degrees {
@@ -146,7 +154,6 @@ h5 {
     gap: 10px;
     align-items: center;
     cursor: pointer;
-    width: fit-content;
 }
 
 
@@ -177,17 +184,39 @@ h5 {
     gap: 10px;
 }
 
+.side-info button:not(:disabled):hover {
+    background-color: #3D2C2E;
+}
+
+.side-info button:not(:disabled):active {
+    background-color: #2E1C1D;
+    transform: scale(0.95);
+    box-shadow: 0 5px #666;
+}
+
+.selectors-container button:not(:disabled):hover {
+    background-color: #3D2C2E;
+}
+
+.selectors-container button:not(:disabled):active {
+    background-color: #2E1C1D;
+    transform: scale(0.95);
+    box-shadow: 0 5px #666;
+}
+
 .side-stats {
     display: flex;
     flex-direction: column;
     gap: 10px;
     background-color: #886F68;
     padding: 20px;
+    border-radius: 8px;
 }
 
 .side-stats p {
     color: white;
     font-size: large;
+    text-align: start;
 }
 
 .side-stats h2 {
@@ -212,7 +241,18 @@ h5 {
     .selectors-container button {
         width: 100%;
     }
-    
+
+    .subjects {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .subjects {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 @media screen and (max-width: 500px){
@@ -224,5 +264,10 @@ h5 {
 
     .schedule-buttons button {
         width: 50%;
+    }
+
+    .subjects {
+        display: grid;
+        grid-template-columns: 1fr;
     }
 }

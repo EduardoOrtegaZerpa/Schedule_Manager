@@ -218,6 +218,13 @@ export class HomeComponent implements OnInit{
   }
 
   showSchedule(algorithmResponse: AlgorithmResponse) {
+    
+    if (algorithmResponse.subjects.length === 0) {
+        this.schedulesInfo = [];
+        this.scheduleService.setScheduleInfo([]);
+        return;
+    }
+    
     this.userService.convertResponseToScheduleInfo(algorithmResponse).subscribe({
         next: (schedulesInfo: SchedulesInfo[]) => {
             this.schedulesInfo = schedulesInfo;

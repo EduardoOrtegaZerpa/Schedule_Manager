@@ -7,17 +7,23 @@
         </div>
 
         <div class="selectors-container">
-            <input type="text" placeholder="Filtrar por asignaturas..." [(ngModel)]="filterTerm" (input)="applyFilter()">
+            <input type="text" placeholder="Filter by subjects..." [(ngModel)]="filterTerm" (input)="applyFilter()">
             <div class="selectors">
                 <h3>DEGREES</h3>
                 <div class="degrees" *ngFor="let degree of degrees">
                     <div class="degree" (click)="degree.id ? toggleDegree(degree.id) : null">
-                        <h4>{{ degree.name }}</h4>
+                        <h4>{{ degree.name }}
+                            <span *ngIf="selectedDegree !== degree.id">&#9664;</span>
+                            <span *ngIf="selectedDegree === degree.id">&#9660;</span>
+                        </h4>
                     </div>
                     <div class="years" *ngIf="selectedDegree === degree.id">
                         <div class="years" *ngFor="let year of getYears(degree.id)">
                             <div class="year" (click)="toggleYear(degree.id, year)">
-                                <h5>Año {{ year }}</h5>
+                                <h5>Año {{ year }}
+                                    <span *ngIf="!isYearSelected(degree.id, year)">&#9665;</span>
+                                    <span *ngIf="isYearSelected(degree.id, year)">&#9661;</span>
+                                </h5>
                             </div>
                             <div *ngIf="isYearSelected(degree.id, year)">
                                 <ul class="subjects">
