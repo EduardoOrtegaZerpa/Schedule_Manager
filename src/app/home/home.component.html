@@ -57,6 +57,7 @@
     <div class="side-container">
         <div class="side-info">
             <h2>GENERATE A NEW RESULT</h2>
+            <p><b>This option is for both semesters and depends on selected subjects.</b></p>
             <button
             (click)="generateSchedule()"
             [disabled]="!selectedSubjects.length"
@@ -66,22 +67,24 @@
 
         <div class="side-info">
             <h2>GENERATE LESS OPTIMAL RESULTS</h2>
-            <p>Consider using this option if you do not really like the latest results and want to obtain a less optimal but still valid schedule.</p>
+            <p>Consider using this option <b>if you do not really like the latest results and want to obtain a less optimal but still valid schedule.</b></p>
             <p>Every time you use this button, take into account that you may receive worse results. 
                 Because of this, it is possible that you will not get any results. 
                 In that case, try selecting different subjects or use the 'New Result' button.
             </p>
+            <p>Remember that you can only use this option if you have already generated a schedule.</p>
+            <p><b>This option is only for the selected semester and does not depend on selected subjects.</b></p>
             <button
             (click)="generateLessOptimalSchedule()"
-            [disabled]="!schedulesInfo.length"
-            [ngClass]="{'disabled': !schedulesInfo.length}"
+            [disabled]="!filterScheduleInfo().length"
+            [ngClass]="{'disabled': !filterScheduleInfo().length}"
             >Less Optimal Result</button>
         </div>
 
         <div class="side-stats">
             <h2>STATISTICS</h2>
-            <p>Free days: {{getFreeDays()}}</p>
-            <p>Weekly occupied hours: {{getOccupiedHours()}}</p>
+            <p>Free days: {{getFreeDays(selectedSemester)}}</p>
+            <p>Weekly occupied hours: {{getOccupiedHours(selectedSemester)}}</p>
         </div>
 
         <div class="side-stats">
