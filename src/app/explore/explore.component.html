@@ -22,7 +22,7 @@
 
     <ng-container *ngFor="let group of shownGroups()">
         <div class="schedule" *ngIf="filteredSchedulesInfo(group).length > 0">
-            <h1>Group: {{group.name}}</h1>
+            <h1>Group: {{group}}</h1>
             <app-schedule [schedulesInfo]="filteredSchedulesInfo(group)"></app-schedule>
         </div>
     </ng-container>    

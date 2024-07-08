@@ -65,10 +65,6 @@ export class ExploreComponent implements OnInit{
         result.forEach((subjects, index) => {
           this.processSubjects(subjects, this.degrees[index]);
         });
-
-        if (this.degrees.length > 0) {
-          this.onDegreeChange(this.degrees[0]);
-        }
       },
       error: error => this.handleSubjectError(error)
     });
@@ -108,10 +104,13 @@ export class ExploreComponent implements OnInit{
   }
 
   shownGroups() {
-    return this.groups.filter(group => {
+    const groups = this.groups.filter(group => {
       const subject = this.subjects.find(subject => subject.id === group.subject_id);
       return subject && subject.semester === this.semesterSelect && subject.degree_id === this.degreeSelect?.id && subject.year === this.yearSelect;
     });
+
+    const groupSetByNames = new Set(groups.map(group => group.name));
+    return groupSetByNames;
   }
 
   processSubjects(subjects: Subject[], degree: Degree) {
@@ -126,8 +125,13 @@ export class ExploreComponent implements OnInit{
     forkJoin(observables).subscribe({
       next: (result) => {
         result.forEach((groups, index) => {
+          console.log('Processing groups', groups, this.subjects[index]);
           this.processGroups(groups, this.subjects[index]);
         });
+        
+        if (this.degrees.length > 0) {
+          this.onDegreeChange(this.degrees[0]);
+        }
       },
       error: error => this.handleGroupError(error)
     });
@@ -189,9 +193,8 @@ export class ExploreComponent implements OnInit{
     });
   }
 
-  filteredSchedulesInfo(group: Group) {
-    console.log(this.schedulesInfo.filter(scheduleInfo => scheduleInfo.group.id === group.id));
-    return this.schedulesInfo.filter(scheduleInfo => scheduleInfo.group.id === group.id);
+  filteredSchedulesInfo(groupName: string) {
+    return this.schedulesInfo.filter(scheduleInfo => scheduleInfo.group.name === groupName);
   }
 
 }
