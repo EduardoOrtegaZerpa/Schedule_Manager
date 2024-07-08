@@ -68,11 +68,15 @@
     gap: 10px;
 }
 
-.schedule-items-container:hover .schedule-info-body {
+.schedule-items-container:hover .schedule-info-body,
+.schedule-items-container:focus .schedule-info-body,
+.schedule-items-container:active .schedule-info-body {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
+
+
 
 @media screen and (max-width: 600px) {
     .column-header-day {
