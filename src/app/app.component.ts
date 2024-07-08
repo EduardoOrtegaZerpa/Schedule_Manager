@@ -27,7 +27,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit{
-  title = 'scheduleManager';
+  title = 'Scheduler';
 
   constructor(private authService: AuthService, protected popupService: PopupService) {}
 
