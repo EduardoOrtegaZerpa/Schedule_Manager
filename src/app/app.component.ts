@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { AuthService } from './auth/auth.service';
@@ -7,6 +7,8 @@ import { CreateSubjectComponent } from './popups/create-subject/create-subject.c
 import { CreateGroupComponent } from './popups/create-group/create-group.component';
 import { PopupService } from './popups/popup-service.service';
 import { CommonModule } from '@angular/common';
+import { LoadingService } from './loading/loading.service';
+import { LoadingComponent } from './loading/loading.component';
 
 @Component({
   selector: 'app-root',
@@ -20,16 +22,21 @@ import { CommonModule } from '@angular/common';
     CreateDegreeComponent, 
     CreateSubjectComponent, 
     CreateGroupComponent,
+    LoadingComponent,
     CommonModule
   ],
   providers: [PopupService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, AfterViewInit {
   title = 'Scheduler';
+  isLoaderVisible: boolean = false;
 
-  constructor(private authService: AuthService, protected popupService: PopupService) {}
+  constructor(
+    private authService: AuthService,
+    public loadingService: LoadingService,
+    protected popupService: PopupService) {}
 
   ngOnInit() {
     this.authService.validateToken().subscribe();
@@ -46,4 +53,11 @@ export class AppComponent implements OnInit{
       this.popupService.toggleWrapperContainerStyles(status);
     });
   }
+
+  ngAfterViewInit() {
+    this.loadingService.isLoading$().subscribe((status: boolean) => {
+      this.isLoaderVisible = status;
+    });
+  }
+
 }
