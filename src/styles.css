@@ -88,8 +88,9 @@ input, button {
 
 main { margin: 0; background: #f0f0f0;}
 
-#wrapper-container {
+#wrapper-container, #loader {
     display: flex;
     flex-direction: column;
     flex: 1;
 }
+
