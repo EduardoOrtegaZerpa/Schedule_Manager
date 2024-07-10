@@ -6,6 +6,7 @@ import { EMPTY, forkJoin } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { ScheduleComponent } from '../schedule/schedule.component';
 import { ScheduleService } from '../schedule/schedule.service';
+import { NotificationService } from '../notification/notification.service';
 
 
 @Component({
@@ -33,7 +34,10 @@ export class HomeComponent implements OnInit{
   private weekHours: number = 24 * 7;
 
 
-  constructor(private userService: UserService, private scheduleService: ScheduleService) {
+  constructor(
+    private userService: UserService,
+    private notificationService: NotificationService,
+    private scheduleService: ScheduleService) {
     this.loadDegreesWithSubjects();
   }
 
@@ -147,18 +151,22 @@ export class HomeComponent implements OnInit{
 
   handleDegreeError(error: any) {
     console.error('Error fetching degrees', error);
+    this.notificationService.show('Error fetching degrees');
   }
 
   handleSubjectError(degree: Degree, error: any) {
     console.error(`No subjects found for degree: ${degree.name}`, error);
+    this.notificationService.show(`No subjects found for degree: ${degree.name}`);
   }
 
   handleScheduleError(error: any) {
     console.error('Error fetching schedule', error);
+    this.notificationService.show('Error fetching schedule');
   }
 
   handleConversionError(error: any) {
     console.error('Error converting response', error);
+    this.notificationService.show('Error converting response');
   }
 
   applyFilter() {
@@ -265,6 +273,8 @@ export class HomeComponent implements OnInit{
         if (this.selectedSemester === semester) {
             this.scheduleService.setScheduleInfo([]);
         }
+        
+        this.notificationService.show('No schedules found');
         
         return;
     }

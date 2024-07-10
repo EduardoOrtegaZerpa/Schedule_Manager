@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { AuthService } from './auth/auth.service';
@@ -9,6 +9,9 @@ import { PopupService } from './popups/popup-service.service';
 import { CommonModule } from '@angular/common';
 import { LoadingService } from './loading/loading.service';
 import { LoadingComponent } from './loading/loading.component';
+import { NotificationComponent } from './notification/notification.component';
+import { NotificationService } from './notification/notification.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +26,8 @@ import { LoadingComponent } from './loading/loading.component';
     CreateSubjectComponent, 
     CreateGroupComponent,
     LoadingComponent,
-    CommonModule
+    CommonModule,
+    NotificationComponent
   ],
   providers: [PopupService],
   templateUrl: './app.component.html',
@@ -32,13 +36,17 @@ import { LoadingComponent } from './loading/loading.component';
 export class AppComponent implements OnInit, AfterViewInit {
   title = 'Scheduler';
   isLoaderVisible: boolean = false;
+  isLoading: Observable<boolean> = new Observable<boolean>();
 
   constructor(
     private authService: AuthService,
     public loadingService: LoadingService,
+    public notificationService: NotificationService,
+    private cdr: ChangeDetectorRef,
     protected popupService: PopupService) {}
 
   ngOnInit() {
+    this.isLoading = this.loadingService.isLoading$();
     this.authService.validateToken().subscribe();
 
     this.popupService.createDegreeService.isOpen$.subscribe((status: boolean) => {
@@ -51,6 +59,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     this.popupService.createGroupService.isOpen$.subscribe((status: boolean) => {
       this.popupService.toggleWrapperContainerStyles(status);
+    });
+
+    this.isLoading.subscribe(() => {
+      this.cdr.detectChanges();
     });
   }
 
