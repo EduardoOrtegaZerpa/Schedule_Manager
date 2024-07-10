@@ -9,7 +9,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  private APIURL = '/api';
+  private APIURL = 'https://scheduler.eduortza.com:3001/api';
   private loginStatusSubject = new BehaviorSubject<boolean>(false);
 
   login(username: string, password: string): Observable<Boolean> {

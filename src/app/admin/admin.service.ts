@@ -14,7 +14,7 @@ export class AdminService {
     private notificationService: NotificationService
   ) { }
 
-  private APIURL = '/api';
+  private APIURL = 'https://scheduler.eduortza.com:3001/api';
 
   addDegree(degree: Degree): Observable<Degree> {
     return this.http.post(`${this.APIURL}/degrees`, degree).pipe(
