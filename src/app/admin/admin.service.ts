@@ -2,13 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Degree, Group, Schedule, Subject } from '../../interfaces';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private notificationService: NotificationService
+  ) { }
 
   private APIURL = '/api';
 
@@ -18,6 +22,7 @@ export class AdminService {
         return response.response as Degree;
       }),
       catchError((error) => {
+        this.notificationService.show('Error creating degree');
         return throwError(() => error);
       })
     );
@@ -29,6 +34,7 @@ export class AdminService {
         return response.response as Degree;
       }),
       catchError((error) => {
+        this.notificationService.show('Error updating degree');
         return throwError(() => error);
       })
     );
@@ -37,6 +43,7 @@ export class AdminService {
   deleteDegree(id: number): Observable<any> {
     return this.http.delete(`${this.APIURL}/degrees/` + id).pipe(
       catchError((error) => {
+        this.notificationService.show('Error deleting degree');
         return throwError(() => error);
       })
     );
@@ -48,6 +55,7 @@ export class AdminService {
         return response.response as Subject;
       }),
       catchError((error) => {
+        this.notificationService.show('Error creating subject');
         return throwError(() => error);
       })
     );
@@ -59,6 +67,7 @@ export class AdminService {
         return response.response as Subject;
       }),
       catchError((error) => {
+        this.notificationService.show('Error updating subject');
         return throwError(() => error);
       })
     );
@@ -67,6 +76,7 @@ export class AdminService {
   deleteSubject(id: number): Observable<any> {
     return this.http.delete(`${this.APIURL}/subjects/` + id).pipe(
       catchError((error) => {
+        this.notificationService.show('Error deleting subject');
         return throwError(() => error);
       })
     );
@@ -78,6 +88,7 @@ export class AdminService {
         return response.response as Group;
       }),
       catchError((error) => {
+        this.notificationService.show('Error creating group');
         return throwError(() => error);
       })
     );
@@ -89,6 +100,7 @@ export class AdminService {
         return response.response as Group;
       }),
       catchError((error) => {
+        this.notificationService.show('Error updating group');
         return throwError(() => error);
       })
     );
@@ -97,6 +109,7 @@ export class AdminService {
   deleteGroup(id: number): Observable<any> {
     return this.http.delete(`${this.APIURL}/groups/` + id).pipe(
       catchError((error) => {
+        this.notificationService.show('Error deleting group');
         return throwError(() => error);
       })
     );
@@ -108,6 +121,7 @@ export class AdminService {
         return response.response as Schedule;
       }),
       catchError((error) => {
+        this.notificationService.show('Error creating schedule');
         return throwError(() => error);
       })
     );
@@ -119,6 +133,7 @@ export class AdminService {
         return response.response as Schedule;
       }),
       catchError((error) => {
+        this.notificationService.show('Error updating schedule');
         return throwError(() => error);
       })
     );
@@ -127,6 +142,7 @@ export class AdminService {
   deleteSchedule(id: number): Observable<any> {
     return this.http.delete(`${this.APIURL}/schedules/` + id).pipe(
       catchError((error) => {
+        this.notificationService.show('Error deleting schedule');
         return throwError(() => error);
       })
     );
