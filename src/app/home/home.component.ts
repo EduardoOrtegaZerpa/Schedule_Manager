@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit{
   subjects: Subject[] = [];
   filteredSubjects: Subject[] = [];
   selectedDegree: number | null = null;
-  selectedYears: { [degreeId: number]: number[] } = {};
+  selectedYears: { [degreeId: number]: number } = {};
   selectedSubjects: Subject[] = [];
   filterTerm: string = '';
   selectedSemester: number = 1;
@@ -86,16 +86,7 @@ export class HomeComponent implements OnInit{
   }
 
   toggleYear(degreeId: number, year: number) {
-    if (!this.selectedYears[degreeId]) {
-      this.selectedYears[degreeId] = [];
-    }
-
-    const index = this.selectedYears[degreeId].indexOf(year);
-    if (index > -1) {
-      this.selectedYears[degreeId].splice(index, 1);
-    } else {
-      this.selectedYears[degreeId].push(year);
-    }
+    this.selectedYears[degreeId] = year;
   }
 
   toggleSubject(subject: Subject) {
@@ -125,7 +116,7 @@ export class HomeComponent implements OnInit{
   }
 
   isYearSelected(degreeId: number, year: number): boolean {
-    return this.selectedYears[degreeId]?.includes(year);
+    return this.selectedYears[degreeId] === year
   }
 
   isSubjectSelected(subject: Subject): boolean {
