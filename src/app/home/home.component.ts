@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit{
   subjects: Subject[] = [];
   filteredSubjects: Subject[] = [];
   selectedDegree: number | null = null;
-  selectedYears: { [degreeId: number]: number } = {};
+  selectedYears: { [degreeId: number]: number | null } = {};
   selectedSubjects: Subject[] = [];
   filterTerm: string = '';
   selectedSemester: number = 1;
@@ -86,6 +86,10 @@ export class HomeComponent implements OnInit{
   }
 
   toggleYear(degreeId: number, year: number) {
+    if (this.selectedYears[degreeId] === year) {
+      this.selectedYears[degreeId] = null;
+      return;
+    }
     this.selectedYears[degreeId] = year;
   }
 
