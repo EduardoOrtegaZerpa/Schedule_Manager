@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
+import {apiUrl} from "../app.config";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  private APIURL = 'https://scheduler.eduortza.com:3001/api';
+  private APIURL = apiUrl;
   private loginStatusSubject = new BehaviorSubject<boolean>(false);
 
   login(username: string, password: string): Observable<Boolean> {
@@ -41,7 +42,7 @@ export class AuthService {
       })
     );
   }
-  
+
   logout() {
     this.loginStatusSubject.next(false);
   }

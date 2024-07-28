@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Degree, Group, Schedule, Subject } from '../../interfaces';
 import { NotificationService } from '../notification/notification.service';
+import {apiUrl} from "../app.config";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AdminService {
     private notificationService: NotificationService
   ) { }
 
-  private APIURL = 'https://scheduler.eduortza.com:3001/api';
+  private APIURL = apiUrl;
 
   addDegree(degree: Degree): Observable<Degree> {
     return this.http.post(`${this.APIURL}/degrees`, degree).pipe(

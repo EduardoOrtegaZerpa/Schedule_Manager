@@ -6,8 +6,15 @@ import { AuthInterceptor, ResponseInterceptor, LoaderInterceptor } from './auth/
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }), 
+    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withFetch(), withInterceptors([AuthInterceptor, ResponseInterceptor, LoaderInterceptor]))
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([AuthInterceptor, ResponseInterceptor, LoaderInterceptor])
+    )
   ]
 };
+
+const debugApiUrl = '/api';
+const productionApiUrl = 'https://scheduler.eduortza.com:3001/api';
+export const apiUrl = debugApiUrl;
