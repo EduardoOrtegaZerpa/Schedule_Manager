@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, catchError, throwError, Observable, forkJoin, switchMap } from 'rxjs';
 import { Degree, Subject, Group, Schedule, AlgorithmResponse, SchedulesInfo } from '../interfaces';
+import {apiUrl} from "./app.config";
 
 
 @Injectable({
@@ -11,7 +12,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  private APIURL = '/api';
+  private APIURL = apiUrl;
 
   getAllDegrees(): Observable<Degree[]> {
     return this.http.get(`${this.APIURL}/degrees`).pipe(
@@ -104,7 +105,11 @@ export class UserService {
   getAllSchedules(): Observable<Schedule[]> {
     return this.http.get(`${this.APIURL}/schedules`).pipe(
       map((response: any) => {
-        return response.response as Schedule[];
+        return response.response.map( (schedule: Schedule) => {
+          schedule.startTime = new Date(schedule.startTime);
+          schedule.endTime = new Date(schedule.endTime);
+          return schedule;
+        });
       }),
       catchError((error) => {
         return throwError(() => error);
@@ -115,7 +120,11 @@ export class UserService {
   getScheduleById(id: number): Observable<Schedule> {
     return this.http.get(`${this.APIURL}/schedules/` + id).pipe(
       map((response: any) => {
-        return response.response as Schedule;
+        return response.response.map( (schedule: Schedule) => {
+          schedule.startTime = new Date(schedule.startTime);
+          schedule.endTime = new Date(schedule.endTime);
+          return schedule;
+        });
       }),
       catchError((error) => {
         return throwError(() => error);
@@ -126,7 +135,11 @@ export class UserService {
   getSchedulesByGroupId(groupId: number): Observable<Schedule[]> {
     return this.http.get(`${this.APIURL}/groups/` + groupId + '/schedules').pipe(
       map((response: any) => {
-        return response.response as Schedule[];
+        return response.response.map( (schedule: Schedule) => {
+          schedule.startTime = new Date(schedule.startTime);
+          schedule.endTime = new Date(schedule.endTime);
+          return schedule;
+        });
       }),
       catchError((error) => {
         return throwError(() => error);
@@ -161,11 +174,11 @@ export class UserService {
   convertResponseToScheduleInfo(response: AlgorithmResponse): Observable<SchedulesInfo[]> {
     const observables = response.subjects.map((subject) => {
         return this.getGroupById(subject.group).pipe(
-            switchMap((group: Group) => 
+            switchMap((group: Group) =>
                 this.getSubjectById(subject.subject).pipe(
-                    switchMap((subject: Subject) => 
+                    switchMap((subject: Subject) =>
                         this.getSchedulesByGroupId(group.id!).pipe(
-                            map((schedules: Schedule[]) => 
+                            map((schedules: Schedule[]) =>
                                 schedules.map((schedule) => ({
                                     subject,
                                     group,
