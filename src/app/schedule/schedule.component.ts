@@ -1,8 +1,8 @@
-import { Component, input, Input, OnInit } from '@angular/core';
-import { ColumnComponent } from './column/column.component';
-import { CommonModule } from '@angular/common';
-import { UserService } from '../user.service';
-import { SchedulesInfo } from '../../interfaces';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {ColumnComponent} from './column/column.component';
+import {CommonModule} from '@angular/common';
+import {UserService} from '../user.service';
+import {SchedulesInfo} from '../../interfaces';
 
 @Component({
   selector: 'app-schedule',
@@ -11,13 +11,18 @@ import { SchedulesInfo } from '../../interfaces';
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.css'
 })
-export class ScheduleComponent implements OnInit{
+export class ScheduleComponent implements OnInit, OnChanges {
+
+  @Input() showFullCalendar: boolean = false;
+  @Input() trimColumns: boolean = true;
+  trimColumnsRange: [number, number] = [0, 24];
 
   private DAY_HOURS = 24;
-  private HOURS_RANGE = 12;
+  private HOURS_RANGE = 24;
   private HOURS_JUMP = this.DAY_HOURS / this.HOURS_RANGE;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {
+  }
 
   hours: string[] = [];
   weekDays: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
@@ -27,9 +32,46 @@ export class ScheduleComponent implements OnInit{
     this.hours = this.generateHours();
   }
 
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes['schedulesInfo']) {
+      console.warn("No schedules info available for trimming columns or trimming is disabled.");
+      return;
+    }
+
+    if (!this.trimColumns) {
+      console.warn("Trimming columns is disabled.");
+      return
+    }
+
+    // Here we trim the columns
+    this.schedulesInfo = changes['schedulesInfo'].currentValue;
+
+    if (!this.schedulesInfo) {
+      console.warn("No schedules info available for trimming columns.")
+      return;
+    }
+
+    console.log("Schedules info");
+    console.log(this.schedulesInfo);
+
+    // Static trim range variable
+    const times = this.schedulesInfo.map(item => ({
+      startTime: item.schedule.startTime.getHours(),
+      endTime: item.schedule.endTime.getHours()
+    }));
+
+    // Encuentra el mínimo startTime y el máximo endTime
+    const minStartTime = times.reduce((min, t) => Math.min(min, t.startTime), 24);
+    const maxEndTime = times.reduce((max, t) => Math.max(max, t.endTime), 0);
+
+    this.trimColumnsRange = [minStartTime, maxEndTime];
+  }
+
+
   generateHours(): string[] {
     const hours = [];
-    for (let i = 0; i < this.DAY_HOURS; i += this.HOURS_JUMP) {
+    for (let i = this.trimColumnsRange[0]; i < this.trimColumnsRange[1]; i += this.HOURS_JUMP) {
       hours.push(`${i.toString().padStart(2, '0')}:00`);
     }
     return hours;

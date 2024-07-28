@@ -1,57 +1,57 @@
 .schedules-calendar {
-    display: flex;
-    justify-content: center;
-    flex: 1;
+  display: flex;
+  justify-content: center;
+  flex: 1;
 }
 
 .schedules-column {
-    flex: 1;
+  flex: 1;
 }
 
 .header-cell {
-    position: relative;
-    flex: 1;
-    padding: 20px;
-    text-align: center;
-    vertical-align: middle;
-    font-weight: 700;
-    height: 20px;
-    background-color: #886F68;
-    color: white;
+  position: relative;
+  width: -webkit-fill-available;
+  flex: 1;
+  padding: 20px;
+  height: 20px;
+  text-align: center;
+  font-weight: 600;
+  background-color: #886F68;
+  color: white;
 }
 
 .header-cell::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.2);
-    z-index: 1;
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 
 
-.hora {
-    display: flex;
-    min-height: 40px;
-    border-top: 1px solid #3D2C2E;;
-    align-items: center;
-    justify-content: center;
+.hour-cell {
+  border-top: 1px solid var(--borderColorLight);
+  border-left: 1px solid var(--borderColorLight);
+  border-right: 1px solid var(--borderColorLight);
 }
 
 @media screen and (max-width: 600px) {
-    .header-cell {
-        font-size: 0.8em;
-        padding: 10px 10px;
-    }
+  .header-cell {
+    font-size: 0.8em;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 
 @media screen and (max-width: 450px) {
-    .header-cell {
-        font-size: 0.6em;
-        padding: 5px 5px;
-    }
-    
+  .header-cell {
+    font-size: 0.6em;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
 }
-  
+

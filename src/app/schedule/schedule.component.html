@@ -1,19 +1,19 @@
 <div class="schedules-calendar">
-
-    <div class="schedules-column hours-column">
-      <div class="header-cell" style="visibility: hidden;"></div>
-      <ng-container *ngFor="let hour of hours; let i = index">
-        <div class="week-hour-row">
-          <div class="header-cell hora">{{ hour }}</div>
-        </div>
-      </ng-container>
-    </div>
-
-
-    <ng-container *ngFor="let day of weekDays; let i = index">
-      <div class="schedules-column">
-        <app-column [day]="i" [schedulesInfoInput]="schedulesInfo"></app-column>
+  <div class="schedules-column">
+    <div class="header-cell"></div>
+    <ng-container *ngFor="let hour of hours; let i = index">
+      <div class="week-hour-row">
+        <div class="header-cell hour-cell">{{ hour }}</div>
       </div>
     </ng-container>
+  </div>
 
+  <ng-container *ngIf="showFullCalendar || (schedulesInfo && schedulesInfo.length > 0)">
+    <ng-container *ngFor="let day of weekDays; let i = index">
+      <div class="schedules-column">
+        <app-column [day]="i" [schedulesInfoInput]="schedulesInfo"
+                    [trimColumnRange]="trimColumnsRange"></app-column>
+      </div>
+    </ng-container>
+  </ng-container>
 </div>

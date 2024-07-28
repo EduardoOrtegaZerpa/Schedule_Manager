@@ -14,11 +14,11 @@ export interface Item{
   hall: string;
   getStartTime(): Date;
   getEndTime(): Date;
-  getHeight(): Height;
+  getPosition(trimColumnRange: [number, number]): Position;
 }
 
-export interface Height {
-  position: number;
+export interface Position {
+  top: number;
   height: number;
 }
 
@@ -36,6 +36,7 @@ export class ColumnComponent implements OnInit, OnChanges{
   items: Item[] = [];
   schedulesInfo: SchedulesInfo[] = [];
   @Input() schedulesInfoInput: SchedulesInfo[] | undefined;
+  @Input() trimColumnRange: [number, number] = [0, 24];
 
   isMobile: boolean;
 
@@ -47,7 +48,7 @@ export class ColumnComponent implements OnInit, OnChanges{
   onResize() {
     this.checkScreenSize();
   }
-  
+
   private checkScreenSize() {
     this.isMobile = window.innerWidth <= 768;
   }
@@ -56,7 +57,7 @@ export class ColumnComponent implements OnInit, OnChanges{
     const dayString = this.days[day];
     return this.isMobile ? dayString.slice(0, 2) : dayString;
   }
-  
+
   ngOnInit(): void {
     if (this.schedulesInfoInput) {
       this.schedulesInfo = this.schedulesInfoInput;
@@ -102,8 +103,6 @@ export class ColumnComponent implements OnInit, OnChanges{
       }
 
       this.items.push(new ScheduleItem(convertedSchedule, scheduleInfo.group, scheduleInfo.subject));
-
-
     });
 
     this.sortItems();
@@ -121,11 +120,8 @@ export class ColumnComponent implements OnInit, OnChanges{
     });
   }
 
-  
   capitalize(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
-
-
 
 }
