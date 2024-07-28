@@ -66,14 +66,26 @@
         </div>
 
         <div class="side-info">
-            <h2>GENERATE LESS OPTIMAL RESULTS</h2>
-            <p>Consider using this option <b>if you do not really like the latest results and want to obtain a less optimal but still valid schedule.</b></p>
-            <p>Every time you use this button, take into account that you may receive worse results. 
-                Because of this, it is possible that you will not get any results. 
-                In that case, try selecting different subjects or use the 'New Result' button.
-            </p>
-            <p>Remember that you can only use this option if you have already generated a schedule.</p>
-            <p><b>This option is only for the selected semester and does not depend on selected subjects.</b></p>
+
+            <h2>Schedule Option Instructions</h2>
+            <p><strong>Use this option if you don't like the schedule you got and want to try for a different one, even if it's not as good.</strong></p>
+        
+            <h3>Examples:</h3>
+            <p>You get a good schedule, but the times don't work for you, like if it's mostly in the evening. If you want a schedule that's not as good but has better times during the day, try using this option as many times as you want.</p>
+        
+            <h3>Keep in mind:</h3>
+            <ul>
+                <li>Each time you use this option, you might get a worse schedule.</li>
+                <li>Sometimes, you might not get a schedule at all.</li>
+                <li>If you don't get a schedule, try picking different subjects or use the "New Result" button.</li>
+            </ul>
+        
+            <h3>Remember:</h3>
+            <ul>
+                <li>You can only use this option if you already made a schedule.</li>
+                <li>This option only works for the semester you selected, no matter what subjects you chose.</li>
+            </ul>
+
             <button
             (click)="generateLessOptimalSchedule()"
             [disabled]="!filterScheduleInfo().length"
