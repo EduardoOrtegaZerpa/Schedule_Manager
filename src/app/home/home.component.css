@@ -178,6 +178,11 @@ p {
     flex: 1;
 }
 
+.schedule > *:not(.schedule-overlaps ){ 
+    display: flex;
+    flex: 1;
+}
+
 .schedule-overlaps {
     display: flex;
     flex-direction: column;
@@ -185,10 +190,14 @@ p {
     padding: 20px;
     border-radius: 8px;
     background-color: #886F68;
+    height: fit-content;
+}
+
+.schedule-overlaps p {
+    text-align: start;
     color: white;
     font-size: x-large;
 }
-
 
 .side-info {
     display: flex;

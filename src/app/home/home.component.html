@@ -27,10 +27,8 @@
               </div>
               <div *ngIf="isYearSelected(degree.id, year)">
                 <ul class="subjects">
-                  <li class="subject"
-                      *ngFor="let subject of getSubjects(degree.id, year)"
-                      [ngClass]="getSubjectClass(subject)"
-                      (click)="toggleSubject(subject)">
+                  <li class="subject" *ngFor="let subject of getSubjects(degree.id, year)"
+                    [ngClass]="getSubjectClass(subject)" (click)="toggleSubject(subject)">
                     {{ subject.name }}
                   </li>
                 </ul>
@@ -51,7 +49,7 @@
 
     <div class="schedule">
       <div *ngIf="selectedSemester">
-        <ng-container *ngIf="isOverlapping[selectedSemester - 1]; else showSchedule">
+        <ng-container *ngIf="isOverlapping[selectedSemester - 1]">
           <div class="schedule-overlaps">
             <p>We've found <b>scheduling conflicts for semester {{ selectedSemester }}.</b></p>
             <p>The subjects you've selected overlap, so it's <b>not possible to create a schedule</b> without conflicts.
@@ -61,10 +59,9 @@
               there.</p>
           </div>
         </ng-container>
-        <ng-template #showSchedule>
-          <app-schedule [showFullCalendar]="true"></app-schedule>
-
-        </ng-template>
+        <ng-container *ngIf="!isOverlapping[selectedSemester - 1]" class="schedule-component">
+          <app-schedule></app-schedule>
+        </ng-container>
       </div>
     </div>
 
@@ -74,11 +71,8 @@
     <div class="side-info">
       <h2>GENERATE A NEW RESULT</h2>
       <p><b>This option is for both semesters and depends on selected subjects.</b></p>
-      <button
-        (click)="generateSchedule()"
-        [disabled]="!selectedSubjects.length"
-        [ngClass]="{'disabled': !selectedSubjects.length}"
-      >New Result
+      <button (click)="generateSchedule()" [disabled]="!selectedSubjects.length"
+        [ngClass]="{'disabled': !selectedSubjects.length}">New Result
       </button>
     </div>
 
@@ -86,7 +80,7 @@
 
       <h2>Schedule Option Instructions</h2>
       <p><strong>Use this option if you don't like the schedule you got and want to try for a different one, even if
-        it's not as good.</strong></p>
+          it's not as good.</strong></p>
 
       <h3>Examples:</h3>
       <p>You get a good schedule, but the times don't work for you, like if it's mostly in the evening. If you want a
@@ -106,11 +100,8 @@
         <li>This option only works for the semester you selected, no matter what subjects you chose.</li>
       </ul>
 
-      <button
-        (click)="generateLessOptimalSchedule()"
-        [disabled]="!filterScheduleInfo().length"
-        [ngClass]="{'disabled': !filterScheduleInfo().length}"
-      >Less Optimal Result
+      <button (click)="generateLessOptimalSchedule()" [disabled]="!filterScheduleInfo().length"
+        [ngClass]="{'disabled': !filterScheduleInfo().length}">Less Optimal Result
       </button>
     </div>
 

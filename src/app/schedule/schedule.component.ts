@@ -13,16 +13,12 @@ import {SchedulesInfo} from '../../interfaces';
 })
 export class ScheduleComponent implements OnInit, OnChanges {
 
-  @Input() showFullCalendar: boolean = false;
-  @Input() trimColumns: boolean = true;
+  @Input() trimColumns: boolean = false;
   trimColumnsRange: [number, number] = [0, 24];
 
   private DAY_HOURS = 24;
-  private HOURS_RANGE = 24;
+  private HOURS_RANGE = 12;
   private HOURS_JUMP = this.DAY_HOURS / this.HOURS_RANGE;
-
-  constructor(private userService: UserService) {
-  }
 
   hours: string[] = [];
   weekDays: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
@@ -44,7 +40,6 @@ export class ScheduleComponent implements OnInit, OnChanges {
       return
     }
 
-    // Here we trim the columns
     this.schedulesInfo = changes['schedulesInfo'].currentValue;
 
     if (!this.schedulesInfo) {
@@ -52,16 +47,11 @@ export class ScheduleComponent implements OnInit, OnChanges {
       return;
     }
 
-    console.log("Schedules info");
-    console.log(this.schedulesInfo);
-
-    // Static trim range variable
     const times = this.schedulesInfo.map(item => ({
       startTime: item.schedule.startTime.getHours(),
       endTime: item.schedule.endTime.getHours()
     }));
 
-    // Encuentra el mínimo startTime y el máximo endTime
     const minStartTime = times.reduce((min, t) => Math.min(min, t.startTime), 24);
     const maxEndTime = times.reduce((max, t) => Math.max(max, t.endTime), 0);
 
@@ -71,6 +61,9 @@ export class ScheduleComponent implements OnInit, OnChanges {
 
   generateHours(): string[] {
     const hours = [];
+    if (this.trimColumns){
+      this.HOURS_JUMP = 1;
+    }
     for (let i = this.trimColumnsRange[0]; i < this.trimColumnsRange[1]; i += this.HOURS_JUMP) {
       hours.push(`${i.toString().padStart(2, '0')}:00`);
     }

@@ -1,3 +1,8 @@
+:host{
+  display: flex;
+  flex: 1;
+}
+
 .schedules-calendar {
   display: flex;
   justify-content: center;
@@ -8,12 +13,22 @@
   flex: 1;
 }
 
+.initial-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.initial-cell {
+  height: 20px;
+}
+
 .header-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   width: -webkit-fill-available;
-  flex: 1;
   padding: 20px;
-  height: 20px;
   text-align: center;
   font-weight: 600;
   background-color: #886F68;
@@ -31,8 +46,13 @@
   z-index: 1;
 }
 
+.week-hour-row {
+  display: flex;
+  flex: 1;
+}
 
 .hour-cell {
+  flex: 1;
   border-top: 1px solid var(--borderColorLight);
   border-left: 1px solid var(--borderColorLight);
   border-right: 1px solid var(--borderColorLight);

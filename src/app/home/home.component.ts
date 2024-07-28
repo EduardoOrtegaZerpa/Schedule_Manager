@@ -44,7 +44,6 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
     this.scheduleService.setScheduleInfo([]);
-    console.log(this.isOverlapping);
   }
 
   loadDegreesWithSubjects() {
