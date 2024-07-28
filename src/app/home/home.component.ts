@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit{
   secondSemesterSchedulesInfo: SchedulesInfo[] = [];
   firstSemesterResponse: AlgorithmResponse | null = null;
   secondSemesterResponse: AlgorithmResponse | null = null;
-  isOverlapping: boolean[] = [true, false];
+  isOverlapping: boolean[] = [false, false];
 
   private weekHours: number = 24 * 7;
 
