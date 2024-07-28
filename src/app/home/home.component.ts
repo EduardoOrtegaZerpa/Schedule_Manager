@@ -275,9 +275,6 @@ export class HomeComponent implements OnInit{
             this.scheduleService.setScheduleInfo([]);
         }
         
-        //FIXME: show error messages and change calendar for text
-        // this.notificationService.show('No schedules found');
-        
         return;
     }
     
