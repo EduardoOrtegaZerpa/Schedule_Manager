@@ -648,8 +648,6 @@ export class GroupsComponent implements OnInit{
               row.hours.endTime !== null &&
               this.checkOverlap(schedule.startTime, schedule.endTime, row.hours.startTime, row.hours.endTime)
             ) {
-              console.log(schedule.startTime, schedule.endTime, row.hours.startTime, row.hours.endTime)
-              console.log(schedule.day, this.getDayName(index));
               overlapDetected = true;
             }
           }

@@ -66,13 +66,13 @@ export class SubjectsComponent implements OnInit{
       }
       return EMPTY;
     });
-  
+
     forkJoin(observables).subscribe({
       next: results => {
         results.forEach((subjects, index) => {
           this.subjects = this.subjects.concat(subjects);
         });
-  
+
         if (this.degrees.length > 0) {
           this.onDegreeChange(this.degrees[0]);
         }
