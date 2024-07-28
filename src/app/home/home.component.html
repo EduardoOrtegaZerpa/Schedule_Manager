@@ -48,10 +48,23 @@
             <button [ngClass]="{'active': selectedSemester === 1}" (click)="switchSemester(1)">1º Semester</button>
             <button [ngClass]="{'active': selectedSemester === 2}" (click)="switchSemester(2)">2º Semester</button>
         </div>
-
+        
         <div class="schedule">
-            <app-schedule></app-schedule>
+            <div *ngIf="selectedSemester">
+                <ng-container *ngIf="isOverlapping[selectedSemester - 1]; else showSchedule" >
+                    <div class="schedule-overlaps">
+                        <p>We've found <b>scheduling conflicts for semester {{ selectedSemester }}.</b></p>
+                        <p>The subjects you've selected overlap, so it's <b>not possible to create a schedule</b> without conflicts.</p>
+                        <p>The system has tried to minimize these overlaps, but they can't be avoided with your current choices.</p>
+                        <p>You can try to adjust your schedule manually, using the <b>explore page</b> but conflicts will still be there.</p>
+                    </div>
+                </ng-container>
+                <ng-template #showSchedule>
+                    <app-schedule></app-schedule>
+                </ng-template>
+            </div>
         </div>
+        
     </div>
 
     <div class="side-container">

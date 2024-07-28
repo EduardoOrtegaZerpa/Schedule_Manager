@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit{
   secondSemesterSchedulesInfo: SchedulesInfo[] = [];
   firstSemesterResponse: AlgorithmResponse | null = null;
   secondSemesterResponse: AlgorithmResponse | null = null;
+  isOverlapping: boolean[] = [true, false];
 
   private weekHours: number = 24 * 7;
 
@@ -43,6 +44,7 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
     this.scheduleService.setScheduleInfo([]);
+    console.log(this.isOverlapping);
   }
 
   loadDegreesWithSubjects() {
@@ -111,6 +113,7 @@ export class HomeComponent implements OnInit{
   }
 
   reset() {
+    this.isOverlapping = [false, false];
     this.selectedSubjects = [];
     this.firstSemesterResponse = null;
     this.secondSemesterResponse = null
@@ -199,6 +202,7 @@ export class HomeComponent implements OnInit{
   }
 
   generateSchedule() {
+    this.isOverlapping = [false, false];
     this.generateScheduleBySemester(1);
     this.generateScheduleBySemester(2);
   }
@@ -261,15 +265,18 @@ export class HomeComponent implements OnInit{
 
         if (semester === 1) {
             this.firstSemesterSchedulesInfo = [];
+            this.isOverlapping[0] = true;
         } else {
             this.secondSemesterSchedulesInfo = [];
+            this.isOverlapping[1] = true;
         }
 
         if (this.selectedSemester === semester) {
             this.scheduleService.setScheduleInfo([]);
         }
         
-        this.notificationService.show('No schedules found');
+        //FIXME: show error messages and change calendar for text
+        // this.notificationService.show('No schedules found');
         
         return;
     }
