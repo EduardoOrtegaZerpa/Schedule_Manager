@@ -1,99 +1,132 @@
 <div class="home">
 
-    <div class="side-container">
-        <div class="side-info">
-            <h2>DEGREES & SUBJECTS</h2>
-            <p>Remember that you can select subjects from both the first semester and the second semester.</p>
-        </div>
+  <div class="side-container">
+    <div class="side-info">
+      <h2>DEGREES & SUBJECTS</h2>
+      <p>Remember that you can select subjects from both the first semester and the second semester.</p>
+    </div>
 
-        <div class="selectors-container">
-            <input type="text" placeholder="Filter by subjects..." [(ngModel)]="filterTerm" (input)="applyFilter()">
-            <div class="selectors">
-                <h3>DEGREES</h3>
-                <div class="degrees" *ngFor="let degree of degrees">
-                    <div class="degree" (click)="degree.id ? toggleDegree(degree.id) : null">
-                        <h4>{{ degree.name }}
-                            <span *ngIf="selectedDegree !== degree.id">&#9664;</span>
-                            <span *ngIf="selectedDegree === degree.id">&#9660;</span>
-                        </h4>
-                    </div>
-                    <div class="years" *ngIf="selectedDegree === degree.id">
-                        <div class="years" *ngFor="let year of getYears(degree.id)">
-                            <div class="year" (click)="toggleYear(degree.id, year)">
-                                <h5>Año {{ year }}
-                                    <span *ngIf="!isYearSelected(degree.id, year)">&#9665;</span>
-                                    <span *ngIf="isYearSelected(degree.id, year)">&#9661;</span>
-                                </h5>
-                            </div>
-                            <div *ngIf="isYearSelected(degree.id, year)">
-                                <ul class="subjects">
-                                    <li class="subject"
-                                    *ngFor="let subject of getSubjects(degree.id, year)"
-                                    [ngClass]="getSubjectClass(subject)"
-                                    (click)="toggleSubject(subject)">
-                                    {{ subject.name }}
-                                </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="selectors-container">
+      <input type="text" placeholder="Filter by subjects..." [(ngModel)]="filterTerm" (input)="applyFilter()">
+      <div class="selectors">
+        <h3>DEGREES</h3>
+        <div class="degrees" *ngFor="let degree of degrees">
+          <div class="degree" (click)="degree.id ? toggleDegree(degree.id) : null">
+            <h4>{{ degree.name }}
+              <span *ngIf="selectedDegree !== degree.id">&#9664;</span>
+              <span *ngIf="selectedDegree === degree.id">&#9660;</span>
+            </h4>
+          </div>
+          <div class="years" *ngIf="selectedDegree === degree.id">
+            <div class="years" *ngFor="let year of getYears(degree.id)">
+              <div class="year" (click)="toggleYear(degree.id, year)">
+                <h5>Año {{ year }}
+                  <span *ngIf="!isYearSelected(degree.id, year)">&#9665;</span>
+                  <span *ngIf="isYearSelected(degree.id, year)">&#9661;</span>
+                </h5>
+              </div>
+              <div *ngIf="isYearSelected(degree.id, year)">
+                <ul class="subjects">
+                  <li class="subject"
+                      *ngFor="let subject of getSubjects(degree.id, year)"
+                      [ngClass]="getSubjectClass(subject)"
+                      (click)="toggleSubject(subject)">
+                    {{ subject.name }}
+                  </li>
+                </ul>
+              </div>
             </div>
-            <button (click)="reset()">Reset</button>
+          </div>
         </div>
+      </div>
+      <button (click)="reset()">Reset</button>
+    </div>
+  </div>
+
+  <div class="schedule-container">
+    <div class="schedule-buttons">
+      <button [ngClass]="{'active': selectedSemester === 1}" (click)="switchSemester(1)">1º Semester</button>
+      <button [ngClass]="{'active': selectedSemester === 2}" (click)="switchSemester(2)">2º Semester</button>
     </div>
 
-    <div class="schedule-container">
-        <div class="schedule-buttons">
-            <button [ngClass]="{'active': selectedSemester === 1}" (click)="switchSemester(1)">1º Semester</button>
-            <button [ngClass]="{'active': selectedSemester === 2}" (click)="switchSemester(2)">2º Semester</button>
-        </div>
-
-        <div class="schedule">
-            <app-schedule [showFullCalendar]="true"></app-schedule>
-        </div>
-    </div>
-
-    <div class="side-container">
-        <div class="side-info">
-            <h2>GENERATE A NEW RESULT</h2>
-            <p><b>This option is for both semesters and depends on selected subjects.</b></p>
-            <button
-            (click)="generateSchedule()"
-            [disabled]="!selectedSubjects.length"
-            [ngClass]="{'disabled': !selectedSubjects.length}"
-            >New Result</button>
-        </div>
-
-        <div class="side-info">
-            <h2>GENERATE LESS OPTIMAL RESULTS</h2>
-            <p>Consider using this option <b>if you do not really like the latest results and want to obtain a less optimal but still valid schedule.</b></p>
-            <p>Every time you use this button, take into account that you may receive worse results.
-                Because of this, it is possible that you will not get any results.
-                In that case, try selecting different subjects or use the 'New Result' button.
+    <div class="schedule">
+      <div *ngIf="selectedSemester">
+        <ng-container *ngIf="isOverlapping[selectedSemester - 1]; else showSchedule">
+          <div class="schedule-overlaps">
+            <p>We've found <b>scheduling conflicts for semester {{ selectedSemester }}.</b></p>
+            <p>The subjects you've selected overlap, so it's <b>not possible to create a schedule</b> without conflicts.
             </p>
-            <p>Remember that you can only use this option if you have already generated a schedule.</p>
-            <p><b>This option is only for the selected semester and does not depend on selected subjects.</b></p>
-            <button
-            (click)="generateLessOptimalSchedule()"
-            [disabled]="!filterScheduleInfo().length"
-            [ngClass]="{'disabled': !filterScheduleInfo().length}"
-            >Less Optimal Result</button>
-        </div>
+            <p>The system has tried to minimize these overlaps, but they can't be avoided with your current choices.</p>
+            <p>You can try to adjust your schedule manually, using the <b>explore page</b> but conflicts will still be
+              there.</p>
+          </div>
+        </ng-container>
+        <ng-template #showSchedule>
+          <app-schedule [showFullCalendar]="true"></app-schedule>
 
-        <div class="side-stats">
-            <h2>STATISTICS</h2>
-            <p>Free days: {{getFreeDays(selectedSemester)}}</p>
-            <p>Weekly occupied hours: {{getOccupiedHours(selectedSemester)}}</p>
-        </div>
-
-        <div class="side-stats">
-            <h2>INFORMATION</h2>
-            <div *ngFor="let item of showScheduleInfo()">
-                <p>Asignatura: {{ item.subject.name }}</p>
-                <p>Grupo: {{ item.group.name }}</p>
-            </div>
-        </div>
+        </ng-template>
+      </div>
     </div>
+
+  </div>
+
+  <div class="side-container">
+    <div class="side-info">
+      <h2>GENERATE A NEW RESULT</h2>
+      <p><b>This option is for both semesters and depends on selected subjects.</b></p>
+      <button
+        (click)="generateSchedule()"
+        [disabled]="!selectedSubjects.length"
+        [ngClass]="{'disabled': !selectedSubjects.length}"
+      >New Result
+      </button>
+    </div>
+
+    <div class="side-info">
+
+      <h2>Schedule Option Instructions</h2>
+      <p><strong>Use this option if you don't like the schedule you got and want to try for a different one, even if
+        it's not as good.</strong></p>
+
+      <h3>Examples:</h3>
+      <p>You get a good schedule, but the times don't work for you, like if it's mostly in the evening. If you want a
+        schedule that's not as good but has better times during the day, try using this option as many times as you
+        want.</p>
+
+      <h3>Keep in mind:</h3>
+      <ul>
+        <li>Each time you use this option, you might get a worse schedule.</li>
+        <li>Sometimes, you might not get a schedule at all.</li>
+        <li>If you don't get a schedule, try picking different subjects or use the "New Result" button.</li>
+      </ul>
+
+      <h3>Remember:</h3>
+      <ul>
+        <li>You can only use this option if you already made a schedule.</li>
+        <li>This option only works for the semester you selected, no matter what subjects you chose.</li>
+      </ul>
+
+      <button
+        (click)="generateLessOptimalSchedule()"
+        [disabled]="!filterScheduleInfo().length"
+        [ngClass]="{'disabled': !filterScheduleInfo().length}"
+      >Less Optimal Result
+      </button>
+    </div>
+
+    <div class="side-stats">
+      <h2>STATISTICS</h2>
+      <p>Free days: {{ getFreeDays(selectedSemester) }}</p>
+      <p>Weekly occupied hours: {{ getOccupiedHours(selectedSemester) }}</p>
+    </div>
+
+    <div class="side-stats">
+      <h2>INFORMATION</h2>
+      <div *ngFor="let item of showScheduleInfo()">
+        <p>Asignatura: {{ item.subject.name }}</p>
+        <p>Grupo: {{ item.group.name }}</p>
+      </div>
+    </div>
+  </div>
 
 </div>
